@@ -4,13 +4,14 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Button from "@material-ui/core/Button";
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
@@ -62,8 +63,10 @@ const styles = theme => ({
 
 class PrimarySearchAppBar extends React.Component {
     state = {
+        isAuthenticating: false,
         anchorEl: null,
         mobileMoreAnchorEl: null,
+        userHasAuthenticated: true
     };
 
     handleProfileMenuOpen = event => {
@@ -110,7 +113,7 @@ class PrimarySearchAppBar extends React.Component {
                 open={isMobileMenuOpen}
                 onClose={this.handleMobileMenuClose}
             >
-            {/* ADD FUNCTIONALITY LATER
+                {/* ADD FUNCTIONALITY LATER
                 <MenuItem>
                     <IconButton color="inherit">
                         <Badge badgeContent={11} color="secondary">
@@ -127,41 +130,67 @@ class PrimarySearchAppBar extends React.Component {
                 </MenuItem>
             </Menu>
         );
+        
 
         return (
+            !this.state.isAuthenticating &&
+
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
                         <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             JotBox
-            </Typography>
+                </Typography>
                         <div className={classes.grow} />
-                        <div className={classes.sectionDesktop}>
-                        {/* ADD LATER
-                        <IconButton color="inherit">
-                                <Badge badgeContent={17} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton> */}
-                            <IconButton
-                                aria-owns={isMenuOpen ? 'material-appbar' : undefined}
-                                aria-haspopup="true"
-                                onClick={this.handleProfileMenuOpen}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                        </div>
-                        <div className={classes.sectionMobile}>
-                            <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
-                                <MoreIcon />
-                            </IconButton>
-                        </div>
+                        {
+                            this.state.userHasAuthenticated
+                                ? <React.Fragment>
+                                    <div className={classes.sectionDesktop}>
+                                        {/* ADD LATER
+                    <IconButton color="inherit">
+                    <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon />
+                    </Badge>
+                </IconButton> */}
+                                        <IconButton
+                                            aria-owns={isMenuOpen ? 'material-appbar' : undefined}
+                                            aria-haspopup="true"
+                                            onClick={this.handleProfileMenuOpen}
+                                            color="inherit"
+                                        >
+                                            <AccountCircle />
+                                        </IconButton>
+                                    </div>
+                                    <div className={classes.sectionMobile}>
+                                        <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
+                                            <MoreIcon />
+                                        </IconButton>
+                                    </div>
+                                </React.Fragment>
+                                : [
+                                    <Button
+                                        component={Link}
+                                        to="/signup"
+                                        color="inherit"
+                                    >
+                                        Signup
+                                    </Button>,
+                                    <Button
+                                        color="inherit"
+                                        component={Link}
+                                        to='/login'
+                                    >
+                                        Logout
+                                    </Button>
+                                ]
+                        }
+
                     </Toolbar>
                 </AppBar>
                 {renderMenu}
                 {renderMobileMenu}
             </div>
+
         );
     }
 }

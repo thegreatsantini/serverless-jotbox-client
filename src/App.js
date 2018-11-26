@@ -1,15 +1,14 @@
 import React, { Component } from 'react';
 import NavBar from "./components/NavBar";
-import Home from './containers/Home'
+import Routes from './Routes'
 
 class App extends Component {
   render() {
     return (
-      <div>
-
-      <NavBar />
-      <Home />
-      </div>
+      <React.Fragment>
+        <NavBar />
+        <Routes />
+      </React.Fragment>
     );
   }
 }
