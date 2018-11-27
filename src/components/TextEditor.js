@@ -5,7 +5,10 @@ import './editorStyles.css'
 export default class SandBox extends Component {
     constructor(props) {
         super(props);
-        this.state = { editorState: EditorState.createEmpty() };
+        this.state = { 
+            editorState: EditorState.createEmpty() 
+        };
+
         this.focus = () => this.refs.editor.focus();
         // this.onChange = (editorState) => this.setState({ editorState });
         this.handleKeyCommand = (command) => this._handleKeyCommand(command);
@@ -15,11 +18,13 @@ export default class SandBox extends Component {
     }
 
     onChange = (editorState) => {
+        const currentEditor = this.props.editor;
         const contentState = editorState.getCurrentContent();
-        console.log('content state', convertToRaw(contentState));
+        const converted = convertToRaw(contentState);
+
         this.setState({
             editorState,
-        });
+        }, () => this.props.onEdit(currentEditor,converted));
     }
 
     _handleKeyCommand(command) {
@@ -76,7 +81,7 @@ export default class SandBox extends Component {
                             handleKeyCommand={this.handleKeyCommand}
                             onChange={this.onChange}
                             onTab={this.onTab}
-                            placeholder="Tell a story..."
+                            placeholder={this.props.placeholder}
                             ref="editor"
                             spellCheck={true}
                         />
