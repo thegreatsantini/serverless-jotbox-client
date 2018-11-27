@@ -28,7 +28,6 @@ class App extends Component {
   }
 
   userHasAuthenticated = authenticated => {
-    console.log('set user')
     this.setState({ isAuthenticated: authenticated });
   }
   render() {

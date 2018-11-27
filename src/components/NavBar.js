@@ -5,14 +5,14 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button";
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
+// import InputBase from '@material-ui/core/InputBase';
+// import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import { withStyles } from '@material-ui/core/styles';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom'
-import NotificationsIcon from '@material-ui/icons/Notifications';
+// import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Auth } from "aws-amplify";
 
@@ -89,7 +89,7 @@ class NavBar extends React.Component {
     handleMobileMenuClose = () => {
         this.setState({ mobileMoreAnchorEl: null });
     };
-    
+
     handleLogout = async event => {
         await Auth.signOut();
 
@@ -187,6 +187,7 @@ class NavBar extends React.Component {
                                 </React.Fragment>
                                 : [
                                     <Button
+                                        key={0}
                                         component={Link}
                                         to="/signup"
                                         color="inherit"
@@ -194,6 +195,7 @@ class NavBar extends React.Component {
                                         Signup
                                     </Button>,
                                     <Button
+                                    key={1}
                                         color="inherit"
                                         component={Link}
                                         to='/login'

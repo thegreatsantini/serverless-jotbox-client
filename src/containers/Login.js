@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+// import classNames from 'classnames';
 import { withStyles } from '@material-ui/core/styles';
-import MenuItem from '@material-ui/core/MenuItem';
+// import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+// import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { Auth } from "aws-amplify";
 import LoaderButton from '../components/LoaderButton';
@@ -91,7 +91,6 @@ class Login extends React.Component {
                         label="Email"
                         className={classes.textField}
                         type="email"
-                        name="email"
                         autoComplete="email"
                         onChange={this.handleChange('email')}
                         margin="normal"
