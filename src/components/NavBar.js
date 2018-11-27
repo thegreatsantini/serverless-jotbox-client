@@ -61,13 +61,15 @@ const styles = theme => ({
     },
 });
 
-class PrimarySearchAppBar extends React.Component {
-    state = {
-        isAuthenticating: false,
-        anchorEl: null,
-        mobileMoreAnchorEl: null,
-        userHasAuthenticated: true
-    };
+class NavBar extends React.Component {
+    constructor() {
+        super()
+        this.state = {
+            isAuthenticating: false,
+            anchorEl: null,
+            mobileMoreAnchorEl: null
+        };
+    }
 
     handleProfileMenuOpen = event => {
         this.setState({ anchorEl: event.currentTarget });
@@ -86,6 +88,14 @@ class PrimarySearchAppBar extends React.Component {
         this.setState({ mobileMoreAnchorEl: null });
     };
 
+    componentDidMount() {
+        console.log(this.props.childProps)
+    }
+
+    handleLogout = event => {
+        this.props.childProps.userHasAuthenticated(false);
+      }
+
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
         const { classes } = this.props;
@@ -101,7 +111,7 @@ class PrimarySearchAppBar extends React.Component {
                 onClose={this.handleMenuClose}
             >
                 <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
-                <MenuItem onClick={this.handleMenuClose}>Logout</MenuItem>
+                <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
             </Menu>
         );
 
@@ -130,11 +140,9 @@ class PrimarySearchAppBar extends React.Component {
                 </MenuItem>
             </Menu>
         );
-        
+
 
         return (
-            !this.state.isAuthenticating &&
-
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
@@ -143,7 +151,8 @@ class PrimarySearchAppBar extends React.Component {
                 </Typography>
                         <div className={classes.grow} />
                         {
-                            this.state.userHasAuthenticated
+                            this.props.childProps.isAuthenticated
+                            
                                 ? <React.Fragment>
                                     <div className={classes.sectionDesktop}>
                                         {/* ADD LATER
@@ -152,6 +161,13 @@ class PrimarySearchAppBar extends React.Component {
                     <NotificationsIcon />
                     </Badge>
                 </IconButton> */}
+                                        <Button
+                                            component={Link}
+                                            to="/newpromt"
+                                            color="inherit"
+                                        >
+                                            New Prompt
+                                    </Button>
                                         <IconButton
                                             aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                             aria-haspopup="true"
@@ -160,6 +176,7 @@ class PrimarySearchAppBar extends React.Component {
                                         >
                                             <AccountCircle />
                                         </IconButton>
+
                                     </div>
                                     <div className={classes.sectionMobile}>
                                         <IconButton aria-haspopup="true" onClick={this.handleMobileMenuOpen} color="inherit">
@@ -180,7 +197,7 @@ class PrimarySearchAppBar extends React.Component {
                                         component={Link}
                                         to='/login'
                                     >
-                                        Logout
+                                        Login
                                     </Button>
                                 ]
                         }
@@ -195,8 +212,8 @@ class PrimarySearchAppBar extends React.Component {
     }
 }
 
-PrimarySearchAppBar.propTypes = {
+NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PrimarySearchAppBar);
+export default withStyles(styles)(NavBar);
