@@ -164,7 +164,7 @@ class NavBar extends React.Component {
                 </IconButton> */}
                                         <Button
                                             component={Link}
-                                            to="/newpromt"
+                                            to="/newdraft"
                                             color="inherit"
                                         >
                                             New Prompt
