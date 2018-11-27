@@ -14,6 +14,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link } from 'react-router-dom'
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import { Auth } from "aws-amplify";
+
 
 const styles = theme => ({
     root: {
@@ -92,9 +94,11 @@ class NavBar extends React.Component {
         console.log(this.props.childProps)
     }
 
-    handleLogout = event => {
+    handleLogout = async event => {
+        await Auth.signOut();
+
         this.props.childProps.userHasAuthenticated(false);
-      }
+    }
 
     render() {
         const { anchorEl, mobileMoreAnchorEl } = this.state;
@@ -152,7 +156,7 @@ class NavBar extends React.Component {
                         <div className={classes.grow} />
                         {
                             this.props.childProps.isAuthenticated
-                            
+
                                 ? <React.Fragment>
                                     <div className={classes.sectionDesktop}>
                                         {/* ADD LATER
