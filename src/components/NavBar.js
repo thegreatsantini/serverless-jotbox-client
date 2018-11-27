@@ -89,15 +89,12 @@ class NavBar extends React.Component {
     handleMobileMenuClose = () => {
         this.setState({ mobileMoreAnchorEl: null });
     };
-
-    componentDidMount() {
-        console.log(this.props.childProps)
-    }
-
+    
     handleLogout = async event => {
         await Auth.signOut();
 
         this.props.childProps.userHasAuthenticated(false);
+        
     }
 
     render() {

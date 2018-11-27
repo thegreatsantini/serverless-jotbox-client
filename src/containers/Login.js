@@ -7,6 +7,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { Auth } from "aws-amplify";
+import LoaderButton from '../components/LoaderButton';
 
 
 const styles = theme => ({
@@ -47,6 +48,7 @@ class Login extends React.Component {
     constructor() {
         super()
         this.state = {
+            isLoading: false,
             email: '',
             password: '',
         };
@@ -65,12 +67,14 @@ class Login extends React.Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-
+        this.setState({ isLoading: true });
         try {
             await Auth.signIn(this.state.email, this.state.password);
             this.props.userHasAuthenticated(true);
+            this.props.history.push("/");
         } catch (e) {
             alert(e.message);
+            this.setState({ isLoading: false });
         }
     }
 
@@ -101,14 +105,14 @@ class Login extends React.Component {
                         onChange={this.handleChange('password')}
                         margin="normal"
                     />
-                    <Button
+                    <LoaderButton
                         disabled={!this.validateForm()}
+                        isLoading={this.state.isLoading}
+                        text="Login"
+                        loadingText="Logging in…"
                         onClick={this.handleSubmit}
-                        variant="contained"
-                        className={classes.button}
-                    >
-                        Login
-                </Button>
+
+                    />
                 </form>
             </Paper>
         );
