@@ -5,8 +5,10 @@ import './editorStyles.css'
 export default class SandBox extends Component {
     constructor(props) {
         super(props);
+        let stateOfEditor;
+        props.content === undefined ? stateOfEditor = EditorState.createEmpty() : stateOfEditor = EditorState.createWithContent(convertFromRaw(props.content))
         this.state = {
-            editorState: EditorState.createEmpty()
+            editorState:  stateOfEditor 
         };
 
         this.focus = () => this.refs.editor.focus();
