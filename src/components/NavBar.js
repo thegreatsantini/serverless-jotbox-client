@@ -139,6 +139,9 @@ class NavBar extends React.Component {
                     </IconButton>
                     <p>Profile</p>
                 </MenuItem>
+                <MenuItem onClick={this.handleLogout}>
+                    <p>Logout</p>
+                </MenuItem>
             </Menu>
         );
 
