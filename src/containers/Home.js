@@ -1,21 +1,23 @@
 import React, { Component } from "react";
-
+import Profile from './Profile'
 const styles = {
     lander: {
         padding: '80px 0',
         textAlign: 'center',
     },
-        h1: {
-            fontFamily: "Open Sans, sans-serif",
-            fontWeight: "600"
-        }, 
-        p: {
-            color: "#999"
-        }
+    h1: {
+        fontFamily: "Open Sans, sans-serif",
+        fontWeight: "600"
+    },
+    p: {
+        color: "#999"
+    }
 }
 
 export default class Home extends Component {
-    render() {
+
+
+    renderLander = () => {
         return (
             <div style={styles.lander}>
                 <div>
@@ -23,6 +25,19 @@ export default class Home extends Component {
                     <p style={styles.p}>Help with writers block, share your work</p>
                 </div>
             </div>
-        );
+        )
+    }
+
+    
+    render() {
+        const { isAuthenticated } = this.props;
+        return (
+            <React.Fragment>
+                {!isAuthenticated
+                    ? this.renderLander()
+                    : <Profile childProps={this.props}/>
+                }
+            </React.Fragment>
+        )
     }
 }
