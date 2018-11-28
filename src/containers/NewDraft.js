@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import TextEditor from '../components/TextEditor'
 import NewPrompt from '../components/NewPrompt';
 import LoaderButton from '../components/LoaderButton'
+import TextField from '@material-ui/core/TextField';
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { API } from "aws-amplify";
 import config from '../config'
@@ -17,6 +18,7 @@ export default class NewDraft extends Component {
     constructor() {
         super()
         this.state = {
+            prompt: '',
             title: '',
             draft: {},
             notes: {}
@@ -29,11 +31,11 @@ export default class NewDraft extends Component {
     }
 
     setPrompt = (prompt) => {
-        const title = prompt.reduce((acc, next) => {
+        const newPrompt =  prompt.reduce((acc, next) => {
             acc += next.text + " "
             return acc
         }, '').trim()
-        this.setState({ title })
+        this.setState({ prompt: newPrompt })
     }
 
     validateForm() {
@@ -42,14 +44,13 @@ export default class NewDraft extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-
-
         this.setState({ isLoading: true });
         try {
             const req = await this.createNote({
                 notes: this.state.notes,
                 title: this.state.title,
-                draft: this.state.draft
+                draft: this.state.draft,
+                prompt: this.state.prompt
             });
             console.log(req)
             this.props.history.push("/");
@@ -58,6 +59,12 @@ export default class NewDraft extends Component {
             this.setState({ isLoading: false });
         }
     }
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
 
     createNote(content) {
         return API.post("drafts", "/drafts", {
@@ -69,6 +76,20 @@ export default class NewDraft extends Component {
         return (
             <div>
                 <NewPrompt setPrompt={this.setPrompt} />
+                <br />
+                <TextField
+                    id="outlined-full-width"
+                    label="Title"
+                    style={{ margin: '15px 0' }}
+                    // placeholder="Placeholder"
+                    fullWidth={true}
+                    onChange={this.handleChange('title')}
+                    margin="dense"
+                    variant="outlined"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
                 <div style={styles.container} >
                     <TextEditor editor='draft' onEdit={this.onEdit} placeholder="Tell a Story..." />
                     <TextEditor editor='notes' onEdit={this.onEdit} placeholder="Take Notes" />
