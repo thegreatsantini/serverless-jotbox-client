@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
+import { Editor, EditorState, RichUtils, convertToRaw, convertFromRaw } from 'draft-js';
 import './editorStyles.css'
 
 export default class SandBox extends Component {
     constructor(props) {
         super(props);
-        this.state = { 
-            editorState: EditorState.createEmpty() 
+        this.state = {
+            editorState: EditorState.createEmpty()
         };
 
         this.focus = () => this.refs.editor.focus();
@@ -21,11 +21,19 @@ export default class SandBox extends Component {
         const currentEditor = this.props.editor;
         const contentState = editorState.getCurrentContent();
         const converted = convertToRaw(contentState);
-
         this.setState({
             editorState,
-        }, () => this.props.onEdit(currentEditor,converted));
+        }, () => {
+            this.props.onEdit(currentEditor, converted)
+        }
+        );
     }
+
+    saveContent = (content) => {
+        const currentEditor = this.props.editor
+        // window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
+        window.localStorage.setItem(currentEditor, JSON.stringify(convertToRaw(content)));
+      }
 
     _handleKeyCommand(command) {
         const { editorState } = this.state;
