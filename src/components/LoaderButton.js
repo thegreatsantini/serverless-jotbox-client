@@ -23,14 +23,15 @@ const LoaderButton = (props, {
     isLoading, 
     disabled = false,
     text,
-    loadingText, 
+    loadingText,
+    color
 }) => {
     
     const { classes } = props;
     return (
         <Button
             variant="contained"
-            color="primary"
+            color={props.color}
             className={classes.button}
             disabled={props.disabled || props.isLoading}
             onClick={props.onClick}
