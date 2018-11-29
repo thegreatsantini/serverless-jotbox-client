@@ -36,12 +36,38 @@ class Draft extends React.Component {
     constructor() {
         super()
         this.state = {
-            isLoading: true,
+            isLoading: null,
             isDeleting: null,
-            draft: {},
+            draft: null,
             notes: {},
             prompt: "",
             title: ""
+        }
+    }
+
+    deleteNote() {
+        return API.del("drafts", `/drafts/${this.props.match.params.id}`);
+    }
+
+    handleDelete = async event => {
+        event.preventDefault();
+
+        const confirmed = window.confirm(
+            "Are you sure you want to delete this note?"
+        );
+
+        if (!confirmed) {
+            return;
+        }
+
+        this.setState({ isDeleting: true });
+
+        try {
+            await this.deleteNote();
+            this.props.history.push("/");
+        } catch (e) {
+            alert(e);
+            this.setState({ isDeleting: false });
         }
     }
 
@@ -52,7 +78,7 @@ class Draft extends React.Component {
     }
 
     handleChange = name => event => {
-        
+
         this.setState({
             [name]: event.target.value,
         });
@@ -162,10 +188,10 @@ class Draft extends React.Component {
                     />
                     <LoaderButton
                         // disabled={!this.validateForm()}
-                        isLoading={this.state.isLoading}
+                        isLoading={this.state.isDeleting}
                         text="Delete Draft"
                         loadingText="Delting Draft…"
-                        onClick={this.handleSubmit}
+                        onClick={this.handleDelete}
                     />
                 </div>
             </React.Fragment>
@@ -178,7 +204,7 @@ class Draft extends React.Component {
         return (
             <div>
                 {
-                    !this.state.isLoading
+                    this.state.draft
                         ? this.renderDraft(classes)
                         : <p>Fetching Draft</p>
                 }
