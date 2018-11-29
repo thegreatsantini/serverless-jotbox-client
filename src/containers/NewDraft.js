@@ -99,7 +99,8 @@ export default class NewDraft extends Component {
                     isLoading={this.state.isLoading}
                     text="Save Draft"
                     loadingText="Saving Draft…"
-                    onClick={this.handleSubmit} />
+                    onClick={this.handleSubmit}
+                    color='primary' />
             </div>
         );
     }

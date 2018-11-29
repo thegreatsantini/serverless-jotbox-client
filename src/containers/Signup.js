@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import { Auth } from "aws-amplify";
 import LoaderButton from '../components/LoaderButton';
+import { Typography } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -22,7 +23,9 @@ const styles = theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: '10px'
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -40,6 +43,14 @@ const styles = theme => ({
     },
     input: {
         display: 'none',
+    },
+    title: {
+        fontSize: '50px',
+        width: '100%',
+        textAlign: 'center',
+        maxWidth: 500,
+        margin: '0 auto',
+        textDecoration: 'underline',
     },
 
 });
@@ -114,6 +125,13 @@ class Signup extends React.Component {
     renderForm(classes) {
         return (
             <Paper className={classes.root} elevation={3}>
+                <Typography
+                    className={classes.title}
+                    gutterBottom
+                    component='h1'
+                >
+                    Signup
+            </Typography>
                 <form className={classes.container} noValidate autoComplete="off">
                     <TextField
                         id="filled-email-input"
@@ -148,6 +166,7 @@ class Signup extends React.Component {
                         text="Signup"
                         loadingText="Logging in…"
                         onClick={this.handleSubmit}
+                        color='primary'
                     />
                 </form>
             </Paper>
@@ -159,7 +178,7 @@ class Signup extends React.Component {
             <Paper className={classes.root} elevation={5}>
                 <form className={classes.container} noValidate autoComplete="off">
                     <TextField
-                    onChange={this.handleChange('confirmationCode')}
+                        onChange={this.handleChange('confirmationCode')}
                         id="standard-full-width"
                         label="Check your email for confirmation code"
                         style={{ margin: 8 }}
@@ -177,6 +196,7 @@ class Signup extends React.Component {
                         type='submit'
                         loadingText="Verifying…"
                         onClick={this.handleConfirmationSubmit}
+                        color='primary'
                     />
                 </form>
             </Paper>

@@ -8,6 +8,7 @@ import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import { Auth } from "aws-amplify";
 import LoaderButton from '../components/LoaderButton';
+import { Typography } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -15,14 +16,17 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 4,
         paddingBottom: theme.spacing.unit * 4,
-        margin: "90px 80px"
+        margin: "90px 80px",
         // margin: '0 auto',
-
+        
     },
     container: {
         display: 'flex',
         flexWrap: 'wrap',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: '10px',
+        // margin: "0 50px"
     },
     textField: {
         marginLeft: theme.spacing.unit,
@@ -40,6 +44,14 @@ const styles = theme => ({
     },
     input: {
         display: 'none',
+    },
+    title: {
+        fontSize: '50px',
+        width: '100%',
+        textAlign: 'center',
+        maxWidth: 500,
+        margin: '0 auto',
+        textDecoration: 'underline',
     },
 
 });
@@ -83,9 +95,14 @@ class Login extends React.Component {
 
         return (
             <Paper className={classes.root} elevation={3}>
-
+                <Typography
+                    className={classes.title}
+                    gutterBottom
+                    component='h1'
+                >
+                    Login
+            </Typography>
                 <form className={classes.container} noValidate autoComplete="off">
-
                     <TextField
                         id="filled-email-input"
                         label="Email"
@@ -110,7 +127,7 @@ class Login extends React.Component {
                         text="Login"
                         loadingText="Logging in…"
                         onClick={this.handleSubmit}
-
+                        color='primary'
                     />
                 </form>
             </Paper>
