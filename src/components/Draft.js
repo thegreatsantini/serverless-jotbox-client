@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextEditor from './TextEditor'
+import Paper from '@material-ui/core/Paper';
 import { Link } from 'react-router-dom';
 import TextField from '@material-ui/core/TextField';
 import LoaderButton from '../components/LoaderButton'
@@ -18,7 +19,7 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 4,
         paddingBottom: theme.spacing.unit * 4,
-        margin: "90px 80px"
+        margin: "10px 10px"
         // margin: '0 auto',
     },
     icon: {
@@ -136,7 +137,7 @@ class Draft extends React.Component {
 
     renderDraft = (classes) => {
         return (
-            <React.Fragment>
+            <Paper className={classes.paper}>
                 <TextField
                     id="outlined-full-width"
                     label="Title"
@@ -185,6 +186,7 @@ class Draft extends React.Component {
                         text="Update Draft"
                         loadingText="Updating Draft…"
                         onClick={this.handleSubmit}
+                        color='primary'
                     />
                     <LoaderButton
                         // disabled={!this.validateForm()}
@@ -192,9 +194,10 @@ class Draft extends React.Component {
                         text="Delete Draft"
                         loadingText="Delting Draft…"
                         onClick={this.handleDelete}
+                        color='secondary'
                     />
                 </div>
-            </React.Fragment>
+            </Paper>
         )
     }
 
