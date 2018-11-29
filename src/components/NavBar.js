@@ -94,7 +94,7 @@ class NavBar extends React.Component {
         await Auth.signOut();
 
         this.props.childProps.userHasAuthenticated(false);
-        
+
     }
 
     render() {
@@ -111,7 +111,7 @@ class NavBar extends React.Component {
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
             >
-                <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+                <MenuItem component={Link} to='/' onClick={this.handleMenuClose}>Profile</MenuItem>
                 <MenuItem onClick={this.handleLogout}>Logout</MenuItem>
             </Menu>
         );
@@ -167,7 +167,7 @@ class NavBar extends React.Component {
                 </IconButton> */}
                                         <Button
                                             component={Link}
-                                            to="/newdraft"
+                                            to="/draft/new"
                                             color="inherit"
                                         >
                                             New Prompt
@@ -198,7 +198,7 @@ class NavBar extends React.Component {
                                         Signup
                                     </Button>,
                                     <Button
-                                    key={1}
+                                        key={1}
                                         color="inherit"
                                         component={Link}
                                         to='/login'
