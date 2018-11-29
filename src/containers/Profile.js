@@ -68,9 +68,9 @@ class Profile extends React.Component {
     renderDraftCards = (style) => {
         return this.state.drafts.map((item, i) => {
             return (
-                <React.Fragment>
+                <React.Fragment key={i}>
 
-                    <ListItem>
+                    <ListItem >
                         {/* <Avatar> */}
                         {/* <EditIcon 
                             component={Link} to='/daft/item' 
