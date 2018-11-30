@@ -167,6 +167,13 @@ class NavBar extends React.Component {
                 </IconButton> */}
                                         <Button
                                             component={Link}
+                                            to="/search/users"
+                                            color="inherit"
+                                        >
+                                            Users
+                                    </Button>
+                                        <Button
+                                            component={Link}
                                             to="/draft/new"
                                             color="inherit"
                                         >
