@@ -69,7 +69,7 @@ class NewPrompt extends React.Component {
                 promptArr.push({ text: prompt.components[1].words[1].text, fadeTime: Math.floor(Math.random() * 5000) + 500 })
                 promptArr.push({ text: prompt.components[2].english, fadeTime: Math.floor(Math.random() * 5000) + 500 })
                 promptArr.push({ text: prompt.components[3].english, fadeTime: Math.floor(Math.random() * 5000) + 500 })
-                // this.props.setPrompt(promptArr)
+                this.props.setPrompt(promptArr)
                 return promptArr
             })
             .then(res => this.setState({ prompt: res }))
