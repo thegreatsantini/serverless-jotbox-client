@@ -52,7 +52,6 @@ class GenreList extends Component {
     handleAdd = (e) => {
         e.preventDefault()
         const { newTag } = this.state
-        // console.log(this.state.tags)
         this.setState({
             tags: [...this.state.tags, newTag],
             toggleAdd: !this.state.toggleAdd
