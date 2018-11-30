@@ -1,12 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
 import Paper from '@material-ui/core/Paper';
-import { API } from "aws-amplify";
 import GenreList from '../components/GenreList';
-import DraftCards from '../components/DraftCards';
-
+import ProfileTabs from './ProfileTabs'
 const styles = theme => ({
     wrapper: {
         display: 'flex',
@@ -40,36 +37,8 @@ class Profile extends React.Component {
         super()
         this.state = {
             isLoading: true,
-            drafts: []
         }
     }
-
-
-    async componentDidMount() {
-        const { isAuthenticated } = this.props.childProps
-        if (!isAuthenticated) {
-            return;
-        }
-
-        try {
-            const drafts = await this.drafts();
-            this.setState({ drafts });
-        } catch (e) {
-            alert(e);
-        }
-
-        this.setState({ isLoading: false });
-    }
-
-    drafts() {
-        return API.get("drafts", "/drafts");
-    }
-
-    handleClick = (item) => {
-        // console.log(item)
-    }
-
-
 
     render() {
         const { classes } = this.props;
@@ -79,18 +48,9 @@ class Profile extends React.Component {
                 <Paper className={classes.aside}>
                     <GenreList genres={['drama', 'history', 'comedy']} />
                 </Paper>
-
-                <Paper className={classes.draftsContainer}>
-                    <List
-                        className={classes.listContainer}
-                    >
-                        {
-                            this.state.drafts.length > 0 &&
-                            <DraftCards drafts={this.state.drafts} />
-                        }
-                    </List>
-                </Paper>
-
+                <div>
+                    <ProfileTabs logedIn={this.props.childProps.isAuthenticated} />
+                </div>
             </div >
         );
     }
