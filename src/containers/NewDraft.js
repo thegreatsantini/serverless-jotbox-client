@@ -3,9 +3,9 @@ import TextEditor from '../components/TextEditor'
 import NewPrompt from '../components/NewPrompt';
 import LoaderButton from '../components/LoaderButton'
 import TextField from '@material-ui/core/TextField';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+// import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { API } from "aws-amplify";
-import config from '../config'
+// import config from '../config'
 const styles = {
     container: {
         display: 'flex',

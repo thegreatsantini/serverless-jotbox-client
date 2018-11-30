@@ -116,7 +116,7 @@ console.log(newUser)
         try {
             await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
             await Auth.signIn(this.state.email, this.state.password);
-            const saveUser = await this.saveUser({
+            await this.saveUser({
                 userName: this.state.userName,
                 followers: []
             })

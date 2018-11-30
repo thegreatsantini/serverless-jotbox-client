@@ -31,12 +31,6 @@ export default class SandBox extends Component {
         );
     }
 
-    saveContent = (content) => {
-        const currentEditor = this.props.editor
-        // window.localStorage.setItem('content', JSON.stringify(convertToRaw(content)));
-        window.localStorage.setItem(currentEditor, JSON.stringify(convertToRaw(content)));
-      }
-
     _handleKeyCommand(command) {
         const { editorState } = this.state;
         const newState = RichUtils.handleKeyCommand(editorState, command);
