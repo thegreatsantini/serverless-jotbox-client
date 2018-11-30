@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import { Auth } from "aws-amplify";
 import LoaderButton from '../components/LoaderButton';
 import { Typography } from '@material-ui/core';
+import { API } from 'aws-amplify';
 
 
 const styles = theme => ({
@@ -64,6 +65,7 @@ class Signup extends React.Component {
             password: "",
             confirmPassword: "",
             confirmationCode: "",
+            userName: '',
             newUser: null
         };
 
@@ -95,6 +97,7 @@ class Signup extends React.Component {
                 username: this.state.email,
                 password: this.state.password
             });
+console.log(newUser)
             this.setState({
                 newUser
             });
@@ -113,13 +116,22 @@ class Signup extends React.Component {
         try {
             await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
             await Auth.signIn(this.state.email, this.state.password);
-
+            const saveUser = await this.saveUser({
+                userName: this.state.userName,
+                followers: []
+            })
             this.props.userHasAuthenticated(true);
             this.props.history.push("/");
         } catch (e) {
             alert(e.message);
             this.setState({ isLoading: false });
         }
+    }
+
+    saveUser(data) {
+        return API.post('users', '/users', {
+            body: data
+        })
     }
 
     renderForm(classes) {
@@ -140,6 +152,15 @@ class Signup extends React.Component {
                         type="email"
                         autoComplete="email"
                         onChange={this.handleChange('email')}
+                        margin="normal"
+                    />
+                    <TextField
+                        id="filled-userName-input"
+                        label="Username"
+                        className={classes.textField}
+                        type="text"
+                        autoComplete="email"
+                        onChange={this.handleChange('userName')}
                         margin="normal"
                     />
                     <TextField
