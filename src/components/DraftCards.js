@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 const styles = theme => ({
     icon: {
         margin: theme.spacing.unit * 2,
-        color: 'black'
+        color: 'black',
     },
 });
 
-const shortenPrompt = (prompt) => prompt.substring(0, 30) + "..."
+const shortenPrompt = (prompt) => prompt.substring(0, 100) + "..."
 
 const DraftCards = (props, styles) => {
     const { classes } = props
@@ -30,7 +30,7 @@ const DraftCards = (props, styles) => {
                     </Icon>
                     <ListItemText primary={item.title} secondary={shortenPrompt(item.prompt)} />
                 </ListItem>
-                <Divider variant="inset" component="li" />
+                <Divider component="li" />
             </React.Fragment>
         )
     })

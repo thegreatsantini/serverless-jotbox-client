@@ -6,29 +6,31 @@ import Paper from '@material-ui/core/Paper';
 import { API } from "aws-amplify";
 import GenreList from '../components/GenreList';
 import DraftCards from '../components/DraftCards';
-import './Profile.css'
 
 const styles = theme => ({
     wrapper: {
         display: 'flex',
         flexFlow: 'row wrap',
-        border: '2px red solid'
     },
-
-   aside : {
-    width: '25%',
-    backgroundColor: theme.palette.background.paper,
-   },
-    root: {
+    aside: {
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 4,
+        paddingBottom: theme.spacing.unit * 4,
+        width: '25%',
+        marginTop: '10px',
+        marginBottom: '10px',
+        backgroundColor: theme.palette.background.paper,
+    },
+    listContainer: {
         width: '100%',
         // maxWidth: 360,
         backgroundColor: theme.palette.background.paper,
     },
-    paper: {
+    draftsContainer: {
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 4,
         paddingBottom: theme.spacing.unit * 4,
-        margin: "90px 80px",
+        margin: "90px 20px",
     },
 
 });
@@ -73,15 +75,14 @@ class Profile extends React.Component {
         const { classes } = this.props;
         // const { isAuthenticated } = this.props.childProps;
         return (
-            <div className={classes.wrapper}>
+            <div elevation={6} className={classes.wrapper}>
                 <Paper className={classes.aside}>
-                
                     <GenreList genres={['drama', 'history', 'comedy']} />
                 </Paper>
 
-                <Paper className={classes.paper}>
+                <Paper className={classes.draftsContainer}>
                     <List
-                        className={classes.root}
+                        className={classes.listContainer}
                     >
                         {
                             this.state.drafts.length > 0 &&
