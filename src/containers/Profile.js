@@ -16,6 +16,7 @@ const styles = theme => ({
         width: '25%',
         marginTop: '10px',
         marginBottom: '10px',
+        marginLeft: '10px',
         backgroundColor: theme.palette.background.paper,
     },
     listContainer: {
