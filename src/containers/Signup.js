@@ -173,7 +173,7 @@ class Signup extends React.Component {
                     />
                     <TextField
                         id="filled-confirmPassword-input"
-                        label="Password"
+                        label="Confirm Password"
                         className={classes.textField}
                         type="password"
                         autoComplete="current-password"
@@ -202,7 +202,7 @@ class Signup extends React.Component {
                         id="standard-full-width"
                         label="Check your email for confirmation code"
                         style={{ margin: 8 }}
-                        placeholder="Input Confermation Code"
+                        placeholder="Input Confirmation Code"
                         fullWidth
                         margin="normal"
                         InputLabelProps={{
