@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import GenreList from '../components/GenreList';
 import ProfileTabs from './ProfileTabs'
+import Loading from '../components/Loading'
 const styles = theme => ({
     wrapper: {
         display: 'flex',
@@ -34,18 +35,23 @@ const styles = theme => ({
 });
 
 class Profile extends React.Component {
+  
     render() {
         const { classes } = this.props;
         // const { isAuthenticated } = this.props.childProps;
         return (
-                    <div elevation={6} className={classes.wrapper}>
-                        <Paper className={classes.aside}>
-                            <GenreList />
-                        </Paper>
-                        <div>
-                            <ProfileTabs logedIn={this.props.childProps.isAuthenticated} />
-                        </div>
-                    </div >
+            <React.Fragment>
+                < div elevation={6} className={classes.wrapper} >
+                    <Paper className={classes.aside}>
+                        <GenreList />
+                    </Paper>
+                    <div>
+                        <ProfileTabs
+                            logedIn={this.props.childProps.isAuthenticated}
+                        />
+                    </div>
+                </div >
+            </React.Fragment>
         );
     }
 }
