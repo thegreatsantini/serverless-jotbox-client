@@ -89,10 +89,10 @@ class GenreList extends Component {
             const { genre } = this.state;
             // console.log(this.state.genre)
             await this.saveGenre({ genre });
-            this.setState({ genre: '' })
         } catch (e) {
             alert(e)
         }
+        this.setState({ genre: '' })
     }
 
     handleChange = name => event => {
