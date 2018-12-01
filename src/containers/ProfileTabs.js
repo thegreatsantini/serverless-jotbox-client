@@ -37,7 +37,8 @@ const styles = theme => ({
 class ProfileTabs extends React.Component {
     state = {
         value: 'drafts',
-        drafts: []
+        drafts: [],
+        isLoading: true,
     };
 
     async componentDidMount() {
@@ -52,8 +53,7 @@ class ProfileTabs extends React.Component {
         } catch (e) {
             alert(e);
         }
-
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false })
     }
 
     drafts() {
@@ -66,47 +66,49 @@ class ProfileTabs extends React.Component {
 
     render() {
         const { classes, theme } = this.props;
-        const { value } = this.state
+        const { value, isLoading } = this.state
         return (
-            <div className={classes.root}>
-                <AppBar position="static" color="default">
-                    <Tabs
-                        value={value}
-                        onChange={this.handleChange}
-                        indicatorColor="primary"
-                        textColor="primary"
-                        fullWidth
-                    >
-                        <Tab value='drafts' label="Drafts" />
-                        <Tab value='following' label="Following" />
-                    </Tabs>
-                </AppBar>
-                {value === 'drafts' &&
-                    <TabContainer dir={theme.direction}>
-                        <Paper className={classes.draftsContainer}>
-                            <List
-                                className={classes.listContainer}
+            <React.Fragment>
+                {
+                    !isLoading &&
+                    <div className={classes.root}>
+                        <AppBar position="static" color="default">
+                            <Tabs
+                                value={value}
+                                onChange={this.handleChange}
+                                indicatorColor="primary"
+                                textColor="primary"
+                                fullWidth
                             >
-                                {
-                                    this.state.drafts.length > 0 &&
-                                    <DraftCards drafts={this.state.drafts} />
-                                }
-                            </List>
-                        </Paper>
-                    </TabContainer>
-                }
-                {value === 'following' &&
-                    <TabContainer dir={theme.direction}><Paper className={classes.draftsContainer}>
-                        <List
-                            className={classes.listContainer}
-                        >
-                            <p>following</p>
-                        </List>
-                    </Paper>
-                    </TabContainer>
-                }
+                                <Tab value='drafts' label="Drafts" />
+                                <Tab value='following' label="Following" />
+                            </Tabs>
+                        </AppBar>
+                        {value === 'drafts' &&
+                            <TabContainer dir={theme.direction}>
+                                <Paper className={classes.draftsContainer}>
+                                    <List
+                                        className={classes.listContainer}
+                                    >
+                                        <DraftCards drafts={this.state.drafts} />
+                                    </List>
+                                </Paper>
+                            </TabContainer>
+                        }
+                        {value === 'following' &&
+                            <TabContainer dir={theme.direction}><Paper className={classes.draftsContainer}>
+                                <List
+                                    className={classes.listContainer}
+                                >
+                                    <p>following</p>
+                                </List>
+                            </Paper>
+                            </TabContainer>
+                        }
 
-            </div>
+                    </div>
+                }
+            </React.Fragment>
         );
     }
 }
