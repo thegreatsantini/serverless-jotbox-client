@@ -34,25 +34,18 @@ const styles = theme => ({
 });
 
 class Profile extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            isLoading: true,
-        }
-    }
-
     render() {
         const { classes } = this.props;
         // const { isAuthenticated } = this.props.childProps;
         return (
-            <div elevation={6} className={classes.wrapper}>
-                <Paper className={classes.aside}>
-                    <GenreList genres={['drama', 'history', 'comedy']} />
-                </Paper>
-                <div>
-                    <ProfileTabs logedIn={this.props.childProps.isAuthenticated} />
-                </div>
-            </div >
+                    <div elevation={6} className={classes.wrapper}>
+                        <Paper className={classes.aside}>
+                            <GenreList />
+                        </Paper>
+                        <div>
+                            <ProfileTabs logedIn={this.props.childProps.isAuthenticated} />
+                        </div>
+                    </div >
         );
     }
 }
