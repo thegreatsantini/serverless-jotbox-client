@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField"
 import { API } from "aws-amplify";
 import GenreInput from './GenreInput'
+import Loading from "./Loading";
 
 
 
@@ -31,10 +32,8 @@ class GenreList extends Component {
     state = {
         genres: [],
         toggleAdd: true,
-        genre: ''
-    }
-
-    componentDidMount() {
+        genre: '',
+        isLoading: true
     }
 
     toggleAdd = (e) => {
@@ -59,7 +58,10 @@ class GenreList extends Component {
         try {
             const list = await this.getGenres();
             const userGenres = list.map(val => val.genre)
-            this.setState({ genres: userGenres });
+            this.setState({ 
+                genres: userGenres,
+                isLoading: false
+            });
         } catch (e) {
             alert(e);
         }
@@ -68,7 +70,7 @@ class GenreList extends Component {
     saveGenre(genre) {
         console.log(genre)
         return API.post('genres', '/genres', {
-            body : genre
+            body: genre
         })
     }
 
@@ -88,7 +90,7 @@ class GenreList extends Component {
             // console.log(this.state.genre)
             await this.saveGenre({ genre });
             this.setState({ genre: '' })
-        } catch(e) {
+        } catch (e) {
             alert(e)
         }
     }
@@ -98,32 +100,35 @@ class GenreList extends Component {
     }
 
     render() {
-        const { classes } = this.props
-
+        const { classes } = this.props;
+        const { isLoading } = this.state;
         return (
             <React.Fragment>
                 {
-                    this.state.genres.length >= 0 &&
-                    <List className={classes.root}>
-                        {
-                            this.renderTags()
-                        }
-                        {
-                            this.state.toggleAdd
-                                ? <Button
-                                    className={classes.button}
-                                    onClick={this.toggleAdd}
-                                >
-                                    +add genre
-                                </Button>
-                                :
-                                <GenreInput
-                                    handleAdd={this.handleAdd}
-                                    handleChange={this.handleChange}
-                                    value={this.state.genre}
-                                />
-                        }
-                    </List>
+                    !isLoading 
+                    ? 
+                            <List className={classes.root}>
+                                {
+                                    this.renderTags()
+                                }
+                                {
+                                    this.state.toggleAdd
+                                        ? <Button
+                                            className={classes.button}
+                                            onClick={this.toggleAdd}
+                                        >
+                                            +add genre
+                            </Button>
+                                        :
+                                        <GenreInput
+                                            handleAdd={this.handleAdd}
+                                            handleChange={this.handleChange}
+                                            value={this.state.genre}
+                                        />
+                                }
+                            </List>
+                    
+                    : <Loading />
                 }
             </React.Fragment>
 
