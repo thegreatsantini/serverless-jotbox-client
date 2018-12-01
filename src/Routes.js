@@ -8,7 +8,7 @@ import Signup from './containers/Signup';
 import SandBox from './SandBox'
 import NewDraft from './containers/NewDraft'
 import Draft from './components/Draft'
-import Users from './containers/Users'
+import SearchUsers from './containers/SearchUsers'
 import NotFound from './components/NotFound';
 import AppliedRoute from './components/AppliedRoute';
 
@@ -18,7 +18,7 @@ export default ({ childProps }) =>
         <UnauthenticatedRoute path="/signup" exact component={Signup} props={childProps} />
         <AuthenticatedRoute path="/draft/new" exact component={NewDraft} props={childProps} />
         <AuthenticatedRoute path="/draft/:id" exact component={Draft} props={childProps} />
-        <AuthenticatedRoute path="/search/users" exact component={Users} props={childProps} />
+        <AuthenticatedRoute path="/search/users" exact component={SearchUsers} props={childProps} />
         <AppliedRoute path="/" exact component={Home} props={childProps} />
         {/* <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} /> */}
