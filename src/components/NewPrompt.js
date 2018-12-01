@@ -27,8 +27,10 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     prompt: {
+        padding: '5px',
         textAlign: 'center'
-    }
+    }, 
+
 });
 
 
@@ -45,8 +47,8 @@ class NewPrompt extends React.Component {
         return (
             <div className={classes.promptContainer}>
                 <Fade in={true} timeout={2000} >
-                    <Typography component='h3' className={classes.prompt}>
-                        <h3>{prompt}</h3>
+                    <Typography variant='h5' className={classes.prompt}>
+                        {prompt}
                     </Typography>
                 </Fade>
                 <Button onClick={this.fetchPrompt} variant="contained" size='small' color="secondary" className={classes.button}>
