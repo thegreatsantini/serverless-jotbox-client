@@ -9,7 +9,7 @@ import List from '@material-ui/core/List';
 import DraftCards from '../components/DraftCards';
 import Paper from '@material-ui/core/Paper';
 import { API } from "aws-amplify";
-
+import Loading from '../components/Loading'
 
 
 function TabContainer({ children, dir }) {
@@ -68,10 +68,12 @@ class ProfileTabs extends React.Component {
         const { classes, theme } = this.props;
         const { value, isLoading } = this.state
         return (
-            <React.Fragment>
+            <Paper className={classes.root}>
                 {
-                    !isLoading &&
-                    <div className={classes.root}>
+                    !isLoading
+                        ?
+                        <React.Fragment>
+
                         <AppBar position="static" color="default">
                             <Tabs
                                 value={value}
@@ -79,36 +81,37 @@ class ProfileTabs extends React.Component {
                                 indicatorColor="primary"
                                 textColor="primary"
                                 fullWidth
-                            >
+                                >
                                 <Tab value='drafts' label="Drafts" />
                                 <Tab value='following' label="Following" />
                             </Tabs>
                         </AppBar>
                         {value === 'drafts' &&
                             <TabContainer dir={theme.direction}>
-                                <Paper className={classes.draftsContainer}>
-                                    <List
-                                        className={classes.listContainer}
-                                    >
-                                        <DraftCards drafts={this.state.drafts} />
-                                    </List>
-                                </Paper>
-                            </TabContainer>
-                        }
-                        {value === 'following' &&
-                            <TabContainer dir={theme.direction}><Paper className={classes.draftsContainer}>
-                                <List
-                                    className={classes.listContainer}
-                                >
-                                    <p>following</p>
-                                </List>
-                            </Paper>
-                            </TabContainer>
-                        }
-
-                    </div>
+                    <Paper className={classes.draftsContainer}>
+                        <List
+                            className={classes.listContainer}
+                            >
+                            <DraftCards drafts={this.state.drafts} />
+                        </List>
+                    </Paper>
+                </TabContainer>
                 }
-            </React.Fragment>
+                        {value === 'following' &&
+                    <TabContainer dir={theme.direction}>
+                        <Paper className={classes.draftsContainer}>
+                            <List
+                                className={classes.listContainer}
+                                >
+                                <p>following</p>
+                            </List>
+                        </Paper>
+                    </TabContainer>
+                }
+                </React.Fragment>
+                    : <Loading />
+    } 
+            </Paper>
         );
     }
 }

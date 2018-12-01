@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField"
 import { API } from "aws-amplify";
 import GenreInput from './GenreInput'
+import Loading from "./Loading";
 
 
 
@@ -31,7 +32,8 @@ class GenreList extends Component {
     state = {
         genres: [],
         toggleAdd: true,
-        newGenre: ''
+        genre: '',
+        isLoading: true
     }
 
     toggleAdd = (e) => {
@@ -55,57 +57,78 @@ class GenreList extends Component {
     async componentDidMount() {
         try {
             const list = await this.getGenres();
-            this.setState({ genres: list });
-
+            const userGenres = list.map(val => val.genre)
+            this.setState({ 
+                genres: userGenres,
+                isLoading: false
+            });
         } catch (e) {
             alert(e);
         }
+    }
+
+    saveGenre(genre) {
+        console.log(genre)
+        return API.post('genres', '/genres', {
+            body: genre
+        })
     }
 
     getGenres() {
         return API.get("genres", `/genres`);
     }
 
-    handleAdd = (e) => {
+    handleAdd = async (e) => {
         e.preventDefault()
-        const { newGenre } = this.state
-        this.setState({
-            genres: [...this.state.genres, newGenre],
-            toggleAdd: !this.state.toggleAdd
+        const { genre } = this.state
+        await this.setState({
+            genres: [...this.state.genres, genre],
+            toggleAdd: !this.state.toggleAdd,
         })
+        try {
+            const { genre } = this.state;
+            // console.log(this.state.genre)
+            await this.saveGenre({ genre });
+            this.setState({ genre: '' })
+        } catch (e) {
+            alert(e)
+        }
     }
 
     handleChange = name => event => {
-        this.setState({ newGenre: event.target.value }, () => console.log(this.state.newGenre))
+        this.setState({ genre: event.target.value })
     }
 
     render() {
-        const { classes } = this.props
-
+        const { classes } = this.props;
+        const { isLoading } = this.state;
         return (
             <React.Fragment>
                 {
-                    this.state.genres.length >= 0 &&
-                    <List className={classes.root}>
-                        {
-                            this.renderTags()
-                        }
-                        {
-                            this.state.toggleAdd
-                                ? <Button
-                                    className={classes.button}
-                                    onClick={this.toggleAdd}
-                                >
-                                    +add genre
-                                </Button>
-                                :
-                                <GenreInput
-                                    handleAdd={this.handleAdd}
-                                    handleChange={this.handleChange}
-                                    value={this.state.newGenre}
-                                />
-                        }
-                    </List>
+                    !isLoading 
+                    ? 
+                            <List className={classes.root}>
+                                {
+                                    this.renderTags()
+                                }
+                                {
+                                    this.state.toggleAdd
+                                        ? <Button
+                                            className={classes.button}
+                                            onClick={this.toggleAdd}
+                                        >
+                                            +add genre
+                            </Button>
+                                        :
+                                        <GenreInput
+                                            handleAdd={this.handleAdd}
+                                            handleChange={this.handleChange}
+                                            value={this.state.genre}
+                                        />
+                                }
+                            </List>
+                    
+                    : <Loading />
                 }
             </React.Fragment>
 
