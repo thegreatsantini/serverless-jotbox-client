@@ -7,6 +7,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
 import TextField from "@material-ui/core/TextField"
+import { API } from "aws-amplify";
+import GenreInput from './GenreInput'
+
 
 
 const styles = theme => ({
@@ -26,9 +29,9 @@ const styles = theme => ({
 });
 class GenreList extends Component {
     state = {
-        tags: [],
-        toggleAdd: false,
-        newTag: ''
+        genres: [],
+        toggleAdd: true,
+        newGenre: ''
     }
 
     toggleAdd = (e) => {
@@ -37,7 +40,7 @@ class GenreList extends Component {
     }
 
     renderTags = () => {
-        return this.props.genres.map((item, i) => {
+        return this.state.genres.map((item, i) => {
             return (
                 <React.Fragment key={i}>
                     <ListItem >
@@ -49,61 +52,58 @@ class GenreList extends Component {
         })
     }
 
+    async componentDidMount() {
+        try {
+            const list = await this.getGenres();
+            this.setState({ genres: list });
+
+        } catch (e) {
+            alert(e);
+        }
+    }
+
+    getGenres() {
+        return API.get("genres", `/genres`);
+    }
+
     handleAdd = (e) => {
         e.preventDefault()
-        const { newTag } = this.state
+        const { newGenre } = this.state
         this.setState({
-            tags: [...this.state.tags, newTag],
+            genres: [...this.state.genres, newGenre],
             toggleAdd: !this.state.toggleAdd
         })
     }
 
     handleChange = name => event => {
-        this.setState({ newTag: event.target.value })
-    }
-
-    renderInput = (classes) => {
-        return (
-
-            <ListItem>
-                <TextField
-                    id="new-tag"
-                    label="new tag"
-                    className={classes.textField}
-                    value={this.state.name}
-                    onChange={this.handleChange('newTag')}
-                    margin="normal"
-                />
-                <Button
-                    onClick={this.handleAdd}
-                >
-                    add tag
-          </Button>
-            </ListItem>
-        )
+        this.setState({ newGenre: event.target.value }, () => console.log(this.state.newGenre))
     }
 
     render() {
         const { classes } = this.props
 
-
         return (
             <React.Fragment>
                 {
-                    this.props.genres &&
+                    this.state.genres.length >= 0 &&
                     <List className={classes.root}>
                         {
                             this.renderTags()
                         }
                         {
-                            !this.state.toggleAdd
+                            this.state.toggleAdd
                                 ? <Button
                                     className={classes.button}
                                     onClick={this.toggleAdd}
                                 >
-                                    + add tag
+                                    +add genre
                                 </Button>
-                                : this.renderInput(classes)
+                                :
+                                <GenreInput
+                                    handleAdd={this.handleAdd}
+                                    handleChange={this.handleChange}
+                                    value={this.state.newGenre}
+                                />
                         }
                     </List>
                 }
