@@ -30,6 +30,7 @@ const styles = theme => ({
         // flexGrow: 1,
         backgroundColor: theme.palette.background.paper,
         width: '95%',
+        minWidth: '850px',
         margin: '10px 20px'
     },
 });
@@ -74,43 +75,51 @@ class ProfileTabs extends React.Component {
                         ?
                         <React.Fragment>
 
-                        <AppBar position="static" color="default">
-                            <Tabs
-                                value={value}
-                                onChange={this.handleChange}
-                                indicatorColor="primary"
-                                textColor="primary"
-                                fullWidth
+                            <AppBar position="static" color="default">
+                                <Tabs
+                                    value={value}
+                                    onChange={this.handleChange}
+                                    indicatorColor="primary"
+                                    textColor="primary"
+                                    fullWidth
                                 >
-                                <Tab value='drafts' label="Drafts" />
-                                <Tab value='following' label="Following" />
-                            </Tabs>
-                        </AppBar>
-                        {value === 'drafts' &&
-                            <TabContainer dir={theme.direction}>
-                    <Paper className={classes.draftsContainer}>
-                        <List
-                            className={classes.listContainer}
-                            >
-                            <DraftCards drafts={this.state.drafts} />
-                        </List>
-                    </Paper>
-                </TabContainer>
+                                    <Tab value='drafts' label="Drafts" />
+                                    <Tab value='following' label="Following" />
+                                </Tabs>
+                            </AppBar>
+                            {value === 'drafts' &&
+                                <TabContainer dir={theme.direction}>
+                                    <Paper className={classes.draftsContainer}>
+                                        <List
+                                            className={classes.listContainer}
+                                        >
+                                            {
+                                                this.state.drafts.length > 0
+                                                    ? <DraftCards drafts={this.state.drafts} />
+                                                    : <Typography
+                                                        style={{ textAlign: 'center' }}
+                                                        variant='h5'>
+                                                        Start writing some drafts
+                                                        </Typography>
+                                            }
+                                        </List>
+                                    </Paper>
+                                </TabContainer>
+                            }
+                            {value === 'following' &&
+                                <TabContainer dir={theme.direction}>
+                                    <Paper className={classes.draftsContainer}>
+                                        <List
+                                            className={classes.listContainer}
+                                        >
+                                            <p>following</p>
+                                        </List>
+                                    </Paper>
+                                </TabContainer>
+                            }
+                        </React.Fragment>
+                        : <Loading />
                 }
-                        {value === 'following' &&
-                    <TabContainer dir={theme.direction}>
-                        <Paper className={classes.draftsContainer}>
-                            <List
-                                className={classes.listContainer}
-                                >
-                                <p>following</p>
-                            </List>
-                        </Paper>
-                    </TabContainer>
-                }
-                </React.Fragment>
-                    : <Loading />
-    } 
             </Paper>
         );
     }
