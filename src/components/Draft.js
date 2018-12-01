@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import TextEditor from './TextEditor'
 import Paper from '@material-ui/core/Paper';
-// import { Link } from 'react-router-dom';
+import Loading from '../components/Loading'
 import TextField from '@material-ui/core/TextField';
 import LoaderButton from '../components/LoaderButton'
 
@@ -209,7 +209,7 @@ class Draft extends React.Component {
                 {
                     this.state.draft
                         ? this.renderDraft(classes)
-                        : <p>Fetching Draft</p>
+                        : <Loading />
                 }
             </div>
         );
