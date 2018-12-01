@@ -97,7 +97,6 @@ class Signup extends React.Component {
                 username: this.state.email,
                 password: this.state.password
             });
-console.log(newUser)
             this.setState({
                 newUser
             });
@@ -174,7 +173,7 @@ console.log(newUser)
                     />
                     <TextField
                         id="filled-confirmPassword-input"
-                        label="Password"
+                        label="Confirm Password"
                         className={classes.textField}
                         type="password"
                         autoComplete="current-password"
@@ -203,7 +202,7 @@ console.log(newUser)
                         id="standard-full-width"
                         label="Check your email for confirmation code"
                         style={{ margin: 8 }}
-                        placeholder="Input Confermation Code"
+                        placeholder="Input Confirmation Code"
                         fullWidth
                         margin="normal"
                         InputLabelProps={{

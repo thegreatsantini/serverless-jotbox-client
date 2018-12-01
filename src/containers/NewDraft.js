@@ -46,13 +46,12 @@ export default class NewDraft extends Component {
         event.preventDefault();
         this.setState({ isLoading: true });
         try {
-            const req = await this.createNote({
+            await this.createNote({
                 notes: this.state.notes,
                 title: this.state.title,
                 draft: this.state.draft,
                 prompt: this.state.prompt
             });
-            console.log(req)
             this.props.history.push("/");
         } catch (e) {
             alert(e);

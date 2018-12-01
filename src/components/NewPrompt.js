@@ -27,8 +27,10 @@ const styles = theme => ({
         margin: theme.spacing.unit,
     },
     prompt: {
+        padding: '5px',
         textAlign: 'center'
-    }
+    }, 
+
 });
 
 
@@ -42,18 +44,17 @@ class NewPrompt extends React.Component {
 
     renderPrompt = (classes) => {
         const prompt = this.state.prompt.map(val => val.text).join(' ')
-        // console.log(prompt)
         return (
             <div className={classes.promptContainer}>
                 <Fade in={true} timeout={2000} >
-                   <Typography component='h3' className={classes.prompt}>
-                   <h3>{prompt}</h3>
-                       </Typography> 
+                    <Typography variant='h5' className={classes.prompt}>
+                        {prompt}
+                    </Typography>
                 </Fade>
                 <Button onClick={this.fetchPrompt} variant="contained" size='small' color="secondary" className={classes.button}>
                     Next
                 </Button>
-               
+
             </div>
         )
     }
