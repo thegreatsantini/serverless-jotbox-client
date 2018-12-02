@@ -86,9 +86,10 @@ class GenreList extends Component {
             toggleAdd: !this.state.toggleAdd,
         })
         try {
-            const { genre } = this.state;
-            // console.log(this.state.genre)
-            await this.saveGenre({ genre });
+            const genre = this.state.genres;
+            console.log(this.state.genre)
+            const test = await this.saveGenre({ genre });
+            console.log(test)
         } catch (e) {
             alert(e)
         }
