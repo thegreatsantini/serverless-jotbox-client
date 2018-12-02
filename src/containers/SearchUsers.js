@@ -70,14 +70,12 @@ class SearchUsers extends React.Component {
     };
 
     handleSelect = event => {
-        console.log(event.target.value)
         const checkGenre = (person) => person
-        const filterGenres = this.state.users.filter((item, i, arr) =>{ 
+        const filterGenres = this.state.users.filter((item, i, arr) => {
             console.log(item.genre)
             return
             // item.genre.includes(event.target.value)
         })
-        console.log(filterGenres)
         this.setState({
             genre: event.target.value,
         });
@@ -96,13 +94,13 @@ class SearchUsers extends React.Component {
     };
 
     massageData = (users, genres) => {
-        const checkGenres = ( person ) => person.length > 0 ? person : ['N/A']
+        const checkGenres = (genres) => genres.length > 0 ? genres : ['N/A']
         const finalData = users.reduce((acc, next) => {
             const currentPerson = {};
             const { userName, userId } = next
             currentPerson.name = userName;
             currentPerson.id = userId;
-            currentPerson.genres = genres.filter(item => item.userId === userId).map(item => item.genre);
+            currentPerson.genres = genres.filter(item => item.userId === userId).map(val => val.genres);
             currentPerson.genres = checkGenres(currentPerson.genres)
             acc.push(currentPerson);
             return acc
@@ -111,7 +109,7 @@ class SearchUsers extends React.Component {
     }
 
     fetchGenres() {
-        return API.get('genres', '/genres');
+        return API.get('genres', '/genres/list');
     }
 
     fetchUsers() {
@@ -122,7 +120,8 @@ class SearchUsers extends React.Component {
         try {
             const allUsers = await this.fetchUsers();
             const allGenres = await this.fetchGenres();
-            this.setState({ genreOptions: allGenres.map(item => item.genre) })
+            const massaged = allGenres.reduce((acc, next) => acc.concat(next.genres), []).filter((val, i, arr) => arr.indexOf(val) === i);
+            this.setState({ genreOptions: massaged })
             await this.massageData(allUsers, allGenres)
         } catch (e) {
             alert(e)
