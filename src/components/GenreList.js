@@ -6,7 +6,6 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import TextField from "@material-ui/core/TextField"
 import { API } from "aws-amplify";
 import GenreInput from './GenreInput'
 import Loading from "./Loading";
@@ -85,7 +84,7 @@ class GenreList extends Component {
         })
         try {
             const genres = this.state.genres;
-            const test = await this.saveGenre({ genres });
+            await this.saveGenre({ genres });
             this.setState({ genre: '' })
         } catch (e) {
             alert(e)
