@@ -57,9 +57,8 @@ class GenreList extends Component {
     async componentDidMount() {
         try {
             const list = await this.getGenres();
-            const userGenres = list.map(val => val.genre)
             this.setState({ 
-                genres: userGenres,
+                genres: list[0].genres,
                 isLoading: false
             });
         } catch (e) {
@@ -68,7 +67,6 @@ class GenreList extends Component {
     }
 
     saveGenre(genre) {
-        console.log(genre)
         return API.post('genres', '/genres', {
             body: genre
         })
@@ -86,14 +84,12 @@ class GenreList extends Component {
             toggleAdd: !this.state.toggleAdd,
         })
         try {
-            const genre = this.state.genres;
-            console.log(this.state.genre)
-            const test = await this.saveGenre({ genre });
-            console.log(test)
+            const genres = this.state.genres;
+            const test = await this.saveGenre({ genres });
+            this.setState({ genre: '' })
         } catch (e) {
             alert(e)
         }
-        this.setState({ genre: '' })
     }
 
     handleChange = name => event => {
