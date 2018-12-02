@@ -29,7 +29,12 @@ const styles = theme => ({
         transform: 'scale(0.8)',
     },
     title: {
-        fontSize: 14,
+        fontSize: '50px',
+        width: '100%',
+        textAlign: 'center',
+        maxWidth: 500,
+        margin: '0 auto',
+        textDecoration: 'underline',
     },
     pos: {
         marginBottom: 12,
@@ -59,11 +64,14 @@ const styles = theme => ({
 
 function UserCard(props) {
     const { classes, users } = props;
-    console.log(users)
     return (
         <Paper className={classes.root} elevation={1}>
-            <Typography component='h3' style={{ textAlign: 'center' }} className={classes.title} gutterBottom>
-                Users
+            <Typography
+                    className={classes.title}
+                    gutterBottom
+                    component='h1'
+                >
+                    Browse Users    
             </Typography>
             {users.map((item, i) => {
                 return (
@@ -71,14 +79,13 @@ function UserCard(props) {
                         <CardContent>
                             <List className={classes.listContainer}>
                                 <div className={classes.avatar}>
-
                                     <Avatar >
                                         <ImageIcon />
                                     </Avatar>
                                 </div>
                                 <div>
                                     <ListItem>
-                                        <ListItemText className={classes.userNameText} primary={item.name} />
+                            <ListItemText className={classes.userNameText} primary={item.name} />
                                     </ListItem>
                                     <Divider />
                                     <ListItem>
