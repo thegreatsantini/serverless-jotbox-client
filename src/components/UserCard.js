@@ -74,6 +74,7 @@ function UserCard(props) {
                     Browse Users    
             </Typography>
             {users.map((item, i) => {
+                const checkArray = (genres) => Array.isArray(genres) ? genres.join(", ") : genres
                 return (
                     <Card key={i} className={classes.card}>
                         <CardContent>
@@ -89,7 +90,7 @@ function UserCard(props) {
                                     </ListItem>
                                     <Divider />
                                     <ListItem>
-                                        <ListItemText className={classes.genresText} primary={item.genres.join(' ')} />
+                                        <ListItemText className={classes.genresText} primary={checkArray(item.genres[0])} />
                                     </ListItem>
                                 </div>
                             </List>

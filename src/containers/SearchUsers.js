@@ -53,7 +53,6 @@ const MenuProps = {
 };
 
 function getStyles(genre, that) {
-    console.log(that)
     return {
         fontWeight:
             that.state.genre.indexOf(genre) === -1
