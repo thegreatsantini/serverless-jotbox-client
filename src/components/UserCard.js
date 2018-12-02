@@ -10,9 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/Inbox';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
 
@@ -20,8 +18,9 @@ const styles = theme => ({
     card: {
         minWidth: 75,
         margin: '10px',
-        border: 'red solid 1px'
-
+        border: 'red solid 1px',
+        display : 'flex',
+        justifyContent: 'center'
     },
     bullet: {
         display: 'inline-block',
@@ -46,6 +45,7 @@ const styles = theme => ({
         margin: '10px'
     },
     genresText: {
+        textAlign: 'center',
         border: 'red solid 1px'
     },
     userNameText: {
