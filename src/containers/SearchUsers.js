@@ -60,30 +60,50 @@ function getStyles(genre, that) {
     };
 }
 
-class SandBox extends React.Component {
+class SearchUsers extends React.Component {
     state = {
         genre: [],
         genreOptions: [],
         isLoading: true,
-        users: []
+        users: [],
+        filteredUsers: []
     };
 
     handleSelect = event => {
-        this.setState({ genre: event.target.value });
-    };
-
-    handleChange = name => event => {
+        console.log(event.target.value)
+        const checkGenre = (person) => person
+        const filterGenres = this.state.users.filter((item, i, arr) =>{ 
+            console.log(item.genre)
+            return
+            // item.genre.includes(event.target.value)
+        })
+        console.log(filterGenres)
         this.setState({
-            [name]: event.target.value,
+            genre: event.target.value,
         });
     };
 
+    handleChange = name => event => {
+        const filtered = this.state.users.filter(item => {
+            const normalizedSearch = event.target.value.replace(/[^A-Za-z0-9]+/gi, '')
+            const regex = new RegExp(normalizedSearch, 'i');
+            return item.name.match(regex) || false
+        });
+
+        this.setState({
+            filteredUsers: filtered
+        })
+    };
+
     massageData = (users, genres) => {
+        const checkGenres = ( person ) => person.length > 0 ? person : ['N/A']
         const finalData = users.reduce((acc, next) => {
             const currentPerson = {};
-            currentPerson.name = next.userName;
-            currentPerson.id = next.userId;
-            currentPerson.genres = genres.filter(item => item.userId === next.userId).map(item => item.genre)
+            const { userName, userId } = next
+            currentPerson.name = userName;
+            currentPerson.id = userId;
+            currentPerson.genres = genres.filter(item => item.userId === userId).map(item => item.genre);
+            currentPerson.genres = checkGenres(currentPerson.genres)
             acc.push(currentPerson);
             return acc
         }, [])
@@ -113,6 +133,8 @@ class SandBox extends React.Component {
     render() {
         const { classes } = this.props;
         const { isLoading } = this.state;
+        let linksToDisplay;
+        this.state.filteredUsers.length < 1 ? linksToDisplay = this.state.users : linksToDisplay = this.state.filteredUsers;
         return (
             <React.Fragment>
                 {
@@ -120,6 +142,7 @@ class SandBox extends React.Component {
                     <React.Fragment>
                         <form className={classes.container} noValidate autoComplete="off">
                             <TextField
+                                onChange={this.handleChange()}
                                 id="outlined-search"
                                 label="Search Users"
                                 type="search"
@@ -152,7 +175,7 @@ class SandBox extends React.Component {
                                 </Select>
                             </FormControl>
                         </form>
-                        <UserCard users={this.state.users} />
+                        <UserCard users={linksToDisplay} />
                     </React.Fragment>
                 }
             </React.Fragment>
@@ -160,9 +183,9 @@ class SandBox extends React.Component {
     }
 }
 
-SandBox.propTypes = {
+SearchUsers.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(SandBox);
+export default withStyles(styles, { withTheme: true })(SearchUsers);
 
