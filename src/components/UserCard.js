@@ -13,13 +13,14 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     card: {
         minWidth: 75,
         margin: '10px',
         border: 'red solid 1px',
-        display : 'flex',
+        display: 'flex',
         justifyContent: 'center'
     },
     bullet: {
@@ -67,11 +68,11 @@ function UserCard(props) {
     return (
         <Paper className={classes.root} elevation={1}>
             <Typography
-                    className={classes.title}
-                    gutterBottom
-                    component='h1'
-                >
-                    Browse Users    
+                className={classes.title}
+                gutterBottom
+                component='h1'
+            >
+                Browse Users
             </Typography>
             {users.map((item, i) => {
                 const checkArray = (genres) => Array.isArray(genres) ? genres.join(", ") : genres
@@ -86,7 +87,7 @@ function UserCard(props) {
                                 </div>
                                 <div>
                                     <ListItem>
-                            <ListItemText className={classes.userNameText} primary={item.name} />
+                                        <ListItemText className={classes.userNameText} primary={item.name} />
                                     </ListItem>
                                     <Divider />
                                     <ListItem>
@@ -96,7 +97,7 @@ function UserCard(props) {
                             </List>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">View</Button>
+                            <Button component={Link} to={{ pathname: `/user/${item.name}`, id : `${item.id}`}} size="small">View</Button>
                         </CardActions>
                     </Card>
                 )
