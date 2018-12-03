@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import { API } from "aws-amplify";
 import GenreInput from './GenreInput'
 import Loading from "./Loading";
+import { Typography } from '@material-ui/core';
 
 
 
@@ -102,7 +103,11 @@ class GenreList extends Component {
             <React.Fragment>
                 {
                     !isLoading 
-                    ? 
+                    ? <React.Fragment>
+
+                    <Typography>
+                        My Genres
+                    </Typography>
                             <List className={classes.root}>
                                 {
                                     this.renderTags()
@@ -123,7 +128,7 @@ class GenreList extends Component {
                                         />
                                 }
                             </List>
-                    
+                    </React.Fragment>
                     : <Loading />
                 }
             </React.Fragment>
