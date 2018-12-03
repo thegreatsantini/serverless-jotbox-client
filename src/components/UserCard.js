@@ -18,10 +18,11 @@ import { Link } from 'react-router-dom';
 const styles = theme => ({
     card: {
         minWidth: 75,
-        margin: '10px',
-        border: 'red solid 1px',
+        margin: '10px 50px 10px 50px',
+        // border: 'red solid 1px',
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexWrap: 'wrap',
     },
     bullet: {
         display: 'inline-block',
@@ -43,19 +44,21 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
-        margin: '10px'
+        margin: '10px 30px 10px 30px',
+        // border: 'blue solid 1px'
     },
     genresText: {
         textAlign: 'center',
-        border: 'red solid 1px'
+        // border: 'red solid 1px'
     },
     userNameText: {
-        border: 'blue solid 1px'
+        textAlign: 'center'
     },
     listContainer: {
         display: 'flex',
         justifyContent: 'center',
-        border: 'solid green 2px',
+        flexWrap: 'wrap',
+        // border: 'solid green 2px',
     },
     avatar: {
         padding: '10px',
@@ -66,7 +69,7 @@ const styles = theme => ({
 function UserCard(props) {
     const { classes, users } = props;
     return (
-        <Paper className={classes.root} elevation={1}>
+        <Paper className={classes.root} elevation={10}>
             <Typography
                 className={classes.title}
                 gutterBottom
@@ -97,7 +100,14 @@ function UserCard(props) {
                             </List>
                         </CardContent>
                         <CardActions>
-                            <Button component={Link} to={{ pathname: `/user/${item.name}`, id : `${item.id}`}} size="small">View</Button>
+                            <Button
+                                component={Link}
+                                to={{ pathname: `/user/${item.name}`, id: `${item.id}` }}
+                                size="small"
+                                variant='contained'
+                            >
+                                View
+                            </Button>
                         </CardActions>
                     </Card>
                 )
