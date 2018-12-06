@@ -93,15 +93,23 @@ class Signup extends React.Component {
         this.setState({ isLoading: true });
 
         try {
+            console.log(this.state)
             const newUser = await Auth.signUp({
-                username: this.state.email,
-                password: this.state.password
-            });
+                password: this.state.password,
+                username: this.state.userName,
+                attributes: {
+                    email: this.state.email
+                },
+            })
+                .then(user => console.log(user))
+                .catch(err => console.log(err));
+
+
             this.setState({
                 newUser
             });
         } catch (e) {
-            alert(e.message);
+            alert('auth.signup', e);
         }
 
         this.setState({ isLoading: false });
@@ -113,16 +121,19 @@ class Signup extends React.Component {
         this.setState({ isLoading: true });
 
         try {
-            await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
-            await Auth.signIn(this.state.email, this.state.password);
-            await this.saveUser({
-                userName: this.state.userName,
-                followers: []
-            })
+            await Auth.confirmSignUp(this.state.userName, this.state.confirmationCode)
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+            // await Auth.signIn(this.state.username, this.state.password);
+            // await this.saveUser({
+            //     userName: this.state.userName,
+            //     followers: [],
+            //     genres: []
+            // })
             this.props.userHasAuthenticated(true);
             this.props.history.push("/");
         } catch (e) {
-            alert(e.message);
+            alert(e.message, 'failed to sign up');
             this.setState({ isLoading: false });
         }
     }
