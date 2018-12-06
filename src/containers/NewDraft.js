@@ -44,13 +44,15 @@ export default class NewDraft extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
+        console.log(this.props.userName)
         this.setState({ isLoading: true });
         try {
             await this.createNote({
                 notes: this.state.notes,
                 title: this.state.title,
                 draft: this.state.draft,
-                prompt: this.state.prompt
+                prompt: this.state.prompt,
+                userName: this.props.userName
             });
             this.props.history.push("/");
         } catch (e) {
