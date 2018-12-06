@@ -6,24 +6,32 @@ import Routes from './Routes'
 class App extends Component {
   constructor(props) {
     super(props);
-  
+
     this.state = {
       isAuthenticated: false,
-      isAuthenticating: true
+      isAuthenticating: true,
+      userName: null
     };
   }
 
   async componentDidMount() {
     try {
       await Auth.currentSession();
-      this.userHasAuthenticated(true);
+      // console.log('current Session', test)
+      await Auth.currentAuthenticatedUser()
+      .then(user => {
+        this.setState({userName: user.username})
+        // Auth.userAttributes(user)
+        this.userHasAuthenticated(true);
+      })
+      // .then(attributes => console.log('hello', attributes))
+        .catch(err => console.log('APP.JS current user', err));
     }
-    catch(e) {
+    catch (e) {
       if (e !== 'No current user') {
         alert(e);
       }
     }
-  
     this.setState({ isAuthenticating: false });
   }
 
@@ -32,6 +40,7 @@ class App extends Component {
   }
   render() {
     const childProps = {
+      userName: this.state.userName,
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
     };

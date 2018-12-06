@@ -6,10 +6,10 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import TextField from "@material-ui/core/TextField"
 import { API } from "aws-amplify";
 import GenreInput from './GenreInput'
 import Loading from "./Loading";
+import { Typography } from '@material-ui/core';
 
 
 
@@ -57,9 +57,8 @@ class GenreList extends Component {
     async componentDidMount() {
         try {
             const list = await this.getGenres();
-            const userGenres = list.map(val => val.genre)
             this.setState({ 
-                genres: userGenres,
+                genres: list[0].genres,
                 isLoading: false
             });
         } catch (e) {
@@ -68,7 +67,6 @@ class GenreList extends Component {
     }
 
     saveGenre(genre) {
-        console.log(genre)
         return API.post('genres', '/genres', {
             body: genre
         })
@@ -86,14 +84,12 @@ class GenreList extends Component {
             toggleAdd: !this.state.toggleAdd,
         })
         try {
-            const genre = this.state.genres;
-            console.log(this.state.genre)
-            const test = await this.saveGenre({ genre });
-            console.log(test)
+            const genres = this.state.genres;
+            await this.saveGenre({ genres });
+            this.setState({ genre: '' })
         } catch (e) {
             alert(e)
         }
-        this.setState({ genre: '' })
     }
 
     handleChange = name => event => {
@@ -107,7 +103,11 @@ class GenreList extends Component {
             <React.Fragment>
                 {
                     !isLoading 
-                    ? 
+                    ? <React.Fragment>
+
+                    <Typography>
+                        My Genres
+                    </Typography>
                             <List className={classes.root}>
                                 {
                                     this.renderTags()
@@ -128,7 +128,7 @@ class GenreList extends Component {
                                         />
                                 }
                             </List>
-                    
+                    </React.Fragment>
                     : <Loading />
                 }
             </React.Fragment>
