@@ -44,7 +44,6 @@ class App extends Component {
       isAuthenticated: this.state.isAuthenticated,
       userHasAuthenticated: this.userHasAuthenticated
     };
-    console.log('user', this.state.userName)
     return (
       !this.state.isAuthenticating &&
       <React.Fragment>
