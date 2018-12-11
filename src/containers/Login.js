@@ -18,7 +18,7 @@ const styles = theme => ({
         paddingBottom: theme.spacing.unit * 4,
         margin: "90px 80px",
         // margin: '0 auto',
-
+        
     },
     container: {
         display: 'flex',
@@ -61,14 +61,14 @@ class Login extends React.Component {
         super()
         this.state = {
             isLoading: false,
-            userName: '',
+            email: '',
             password: '',
         };
 
     }
 
     validateForm() {
-        return this.state.userName.length > 0 && this.state.password.length > 0;
+        return this.state.email.length > 0 && this.state.password.length > 0;
     }
 
     handleChange = name => event => {
@@ -81,10 +81,7 @@ class Login extends React.Component {
         event.preventDefault();
         this.setState({ isLoading: true });
         try {
-            await Auth.signIn(this.state.userName, this.state.password)
-                .then(user => console.log(user))
-                .catch(err => console.log(err));
-
+            await Auth.signIn(this.state.email, this.state.password);
             this.props.userHasAuthenticated(true);
             this.props.history.push("/");
         } catch (e) {
@@ -108,11 +105,11 @@ class Login extends React.Component {
                 <form className={classes.container} noValidate autoComplete="off">
                     <TextField
                         id="filled-email-input"
-                        label="User Name"
+                        label="Email"
                         className={classes.textField}
-                        type="text"
+                        type="email"
                         autoComplete="email"
-                        onChange={this.handleChange('userName')}
+                        onChange={this.handleChange('email')}
                         margin="normal"
                     />
                     <TextField

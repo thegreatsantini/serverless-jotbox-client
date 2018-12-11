@@ -102,7 +102,7 @@ function UserCard(props) {
                         <CardActions>
                             <Button
                                 component={Link}
-                                to={{ pathname: `/user/${item.name}`, id: `${item.id}` }}
+                                to={{ pathname: `/user/${item.id}`, id: `${item.id}` }}
                                 size="small"
                                 variant='contained'
                             >

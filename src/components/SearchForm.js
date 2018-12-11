@@ -6,6 +6,7 @@ const styles = theme => ({
     container: {
         display: 'flex',
         flexWrap: 'wrap',
+        flexGrow: 1,
     },
     textField: {
         marginLeft: theme.spacing.unit,
