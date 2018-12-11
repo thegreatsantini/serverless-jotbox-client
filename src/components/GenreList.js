@@ -58,17 +58,21 @@ class GenreList extends Component {
         try {
             const list = await this.getGenres();
             this.setState({ 
-                genres: list[0].genres,
+                genres: list[0].genres || [], 
                 isLoading: false
             });
         } catch (e) {
+            this.setState({
+                genres: [], 
+                isLoading: false
+            })
             alert(e);
         }
     }
 
-    saveGenre(genre) {
+    saveGenre(genres) {
         return API.post('genres', '/genres', {
-            body: genre
+            body: genres
         })
     }
 
