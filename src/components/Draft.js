@@ -64,7 +64,7 @@ class Draft extends React.Component {
         this.setState({ isDeleting: true });
 
         try {
-            await this.deleteNote();
+            // await this.deleteNote();
             this.props.history.push("/");
         } catch (e) {
             alert(e);
@@ -89,6 +89,7 @@ class Draft extends React.Component {
         try {
 
             const note = await this.getDraft();
+            console.log(note)
             const { draft, prompt, title, notes } = note;
 
             this.setState({
