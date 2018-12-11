@@ -117,7 +117,8 @@ class Signup extends React.Component {
             await Auth.signIn(this.state.email, this.state.password);
             await this.saveUser({
                 userName: this.state.userName,
-                followers: []
+                followers: [],
+                genres: []
             })
             this.props.userHasAuthenticated(true);
             this.props.history.push("/");

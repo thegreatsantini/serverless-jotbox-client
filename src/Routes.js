@@ -11,6 +11,8 @@ import Draft from './components/Draft'
 import SearchUsers from './containers/SearchUsers'
 import NotFound from './components/NotFound';
 import AppliedRoute from './components/AppliedRoute';
+import ViewUser from './containers/ViewUser';
+import VisitingDraft from './components/VisitingDraft'
 
 export default ({ childProps }) =>
     <Switch>
@@ -18,7 +20,9 @@ export default ({ childProps }) =>
         <UnauthenticatedRoute path="/signup" exact component={Signup} props={childProps} />
         <AuthenticatedRoute path="/draft/new" exact component={NewDraft} props={childProps} />
         <AuthenticatedRoute path="/draft/:id" exact component={Draft} props={childProps} />
+        <AuthenticatedRoute path="/user/:userId" exact component={ViewUser} props={childProps} />
         <AuthenticatedRoute path="/search/users" exact component={SearchUsers} props={childProps} />
+        <AuthenticatedRoute path="/user/:userId/draft/:draftId" exact component={VisitingDraft} props={childProps} />
         <AppliedRoute path="/" exact component={Home} props={childProps} />
         {/* <Route path="/" exact component={Home} />
         <Route path="/login" exact component={Login} /> */}

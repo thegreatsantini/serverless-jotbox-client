@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
+import Paper from '@material-ui/core/Paper'
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -10,16 +10,10 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import { API } from "aws-amplify";
 import UserCard from '../components/UserCard'
+import SearchForm from '../components/SearchForm';
+import Loading from '../components/Loading';
 
 const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
     dense: {
         marginTop: 16,
     },
@@ -29,7 +23,7 @@ const styles = theme => ({
     formControl: {
         margin: theme.spacing.unit,
         minWidth: 120,
-        maxWidth: 300,
+        maxWidth: 300
     },
     chips: {
         display: 'flex',
@@ -38,7 +32,16 @@ const styles = theme => ({
     chip: {
         margin: theme.spacing.unit / 4,
     },
+    topBar: {
+        display : 'flex',
+        flexWrap: 'wrap',
+        margin: '20px',
+        ...theme.mixins.gutters(),
+        paddingTop: theme.spacing.unit * 2,
+        paddingBottom: theme.spacing.unit * 2,
+    }
 });
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -60,6 +63,7 @@ function getStyles(genre, that) {
     };
 }
 
+
 class SearchUsers extends React.Component {
     state = {
         genre: [],
@@ -70,14 +74,12 @@ class SearchUsers extends React.Component {
     };
 
     handleSelect = event => {
-        console.log(event.target.value)
-        const checkGenre = (person) => person
-        const filterGenres = this.state.users.filter((item, i, arr) =>{ 
-            console.log(item.genre)
-            return
-            // item.genre.includes(event.target.value)
-        })
-        console.log(filterGenres)
+        // const checkGenre = (person) => person
+        // const filterGenres = this.state.users.filter((item, i, arr) => {
+        //     console.log(item.genres)
+        //     return
+        //    item.genre.includes(event.target.value)
+        // })
         this.setState({
             genre: event.target.value,
         });
@@ -96,13 +98,13 @@ class SearchUsers extends React.Component {
     };
 
     massageData = (users, genres) => {
-        const checkGenres = ( person ) => person.length > 0 ? person : ['N/A']
+        const checkGenres = (genres) => genres.length > 0 ? genres : ['N/A']
         const finalData = users.reduce((acc, next) => {
             const currentPerson = {};
             const { userName, userId } = next
             currentPerson.name = userName;
             currentPerson.id = userId;
-            currentPerson.genres = genres.filter(item => item.userId === userId).map(item => item.genre);
+            currentPerson.genres = genres.filter(item => item.userId === userId).map(val => val.genres);
             currentPerson.genres = checkGenres(currentPerson.genres)
             acc.push(currentPerson);
             return acc
@@ -111,7 +113,7 @@ class SearchUsers extends React.Component {
     }
 
     fetchGenres() {
-        return API.get('genres', '/genres');
+        return API.get('genres', '/genres/list');
     }
 
     fetchUsers() {
@@ -122,7 +124,8 @@ class SearchUsers extends React.Component {
         try {
             const allUsers = await this.fetchUsers();
             const allGenres = await this.fetchGenres();
-            this.setState({ genreOptions: allGenres.map(item => item.genre) })
+            const massaged = allGenres.reduce((acc, next) => acc.concat(next.genres), []).filter((val, i, arr) => arr.indexOf(val) === i);
+            this.setState({ genreOptions: massaged })
             await this.massageData(allUsers, allGenres)
         } catch (e) {
             alert(e)
@@ -133,50 +136,47 @@ class SearchUsers extends React.Component {
     render() {
         const { classes } = this.props;
         const { isLoading } = this.state;
-        let linksToDisplay;
-        this.state.filteredUsers.length < 1 ? linksToDisplay = this.state.users : linksToDisplay = this.state.filteredUsers;
+        let usersToDisplay;
+        this.state.filteredUsers.length < 1 ? usersToDisplay = this.state.users : usersToDisplay = this.state.filteredUsers;
         return (
             <React.Fragment>
                 {
-                    !isLoading &&
-                    <React.Fragment>
-                        <form className={classes.container} noValidate autoComplete="off">
-                            <TextField
-                                onChange={this.handleChange()}
-                                id="outlined-search"
-                                label="Search Users"
-                                type="search"
-                                className={classes.textField}
-                                margin="normal"
-                                variant="outlined"
-                                fullWidth
-                            />
-                            <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="select-multiple-genres">Genres</InputLabel>
-                                <Select
-                                    multiple
-                                    value={this.state.genre}
-                                    onChange={this.handleSelect}
-                                    input={<Input id="select-multiple-genres" />}
-                                    renderValue={selected => (
-                                        <div className={classes.chips}>
-                                            {selected.map(value => (
-                                                <Chip key={value} label={value} className={classes.chip} />
-                                            ))}
-                                        </div>
-                                    )}
-                                    MenuProps={MenuProps}
-                                >
-                                    {this.state.genreOptions.map((item, i) => (
-                                        <MenuItem key={i} value={item} style={getStyles(item, this)}>
-                                            {item}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </form>
-                        <UserCard users={linksToDisplay} />
-                    </React.Fragment>
+                    !isLoading
+                        ? <React.Fragment>
+                            <Paper className={classes.topBar}> 
+                                <SearchForm
+                                    genre={this.state.genre}
+                                    handleChange={this.handleChange}
+                                    handleSelect={this.handleSelect}
+                                    genreOptions={this.state.genreOptions}
+                                />
+                                <FormControl className={classes.formControl}>
+                                    <InputLabel htmlFor="select-multiple-genres">Genres</InputLabel>
+                                    <Select
+                                        multiple
+                                        value={this.state.genre}
+                                        onChange={this.handleSelect}
+                                        input={<Input id="select-multiple-genres" />}
+                                        renderValue={selected => (
+                                            <div className={classes.chips}>
+                                                {selected.map(value => (
+                                                    <Chip key={value} label={value} className={classes.chip} />
+                                                ))}
+                                            </div>
+                                        )}
+                                        MenuProps={MenuProps}
+                                    >
+                                        {this.state.genreOptions.map((item, i) => (
+                                            <MenuItem key={i} value={item} style={getStyles(item, this)}>
+                                                {item}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Paper>
+                            <UserCard users={usersToDisplay} />
+                        </React.Fragment>
+                        : <Loading />
                 }
             </React.Fragment>
         );

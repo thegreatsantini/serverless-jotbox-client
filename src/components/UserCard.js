@@ -10,18 +10,19 @@ import Paper from '@material-ui/core/Paper';
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/Inbox';
 import Avatar from '@material-ui/core/Avatar';
 import ImageIcon from '@material-ui/icons/Image';
+import { Link } from 'react-router-dom';
 
 const styles = theme => ({
     card: {
         minWidth: 75,
-        margin: '10px',
-        border: 'red solid 1px'
-
+        margin: '10px 50px 10px 50px',
+        // border: 'red solid 1px',
+        display: 'flex',
+        justifyContent: 'center',
+        flexWrap: 'wrap',
     },
     bullet: {
         display: 'inline-block',
@@ -43,18 +44,21 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
-        margin: '10px'
+        margin: '10px 30px 10px 30px',
+        // border: 'blue solid 1px'
     },
     genresText: {
-        border: 'red solid 1px'
+        textAlign: 'center',
+        // border: 'red solid 1px'
     },
     userNameText: {
-        border: 'blue solid 1px'
+        textAlign: 'center'
     },
     listContainer: {
         display: 'flex',
         justifyContent: 'center',
-        border: 'solid green 2px',
+        flexWrap: 'wrap',
+        // border: 'solid green 2px',
     },
     avatar: {
         padding: '10px',
@@ -65,15 +69,16 @@ const styles = theme => ({
 function UserCard(props) {
     const { classes, users } = props;
     return (
-        <Paper className={classes.root} elevation={1}>
+        <Paper className={classes.root} elevation={10}>
             <Typography
-                    className={classes.title}
-                    gutterBottom
-                    component='h1'
-                >
-                    Browse Users    
+                className={classes.title}
+                gutterBottom
+                component='h1'
+            >
+                Browse Users
             </Typography>
             {users.map((item, i) => {
+                const checkArray = (genres) => Array.isArray(genres) ? genres.join(", ") : genres
                 return (
                     <Card key={i} className={classes.card}>
                         <CardContent>
@@ -85,17 +90,24 @@ function UserCard(props) {
                                 </div>
                                 <div>
                                     <ListItem>
-                            <ListItemText className={classes.userNameText} primary={item.name} />
+                                        <ListItemText className={classes.userNameText} primary={item.name} />
                                     </ListItem>
                                     <Divider />
                                     <ListItem>
-                                        <ListItemText className={classes.genresText} primary={item.genres.join(' ')} />
+                                        <ListItemText className={classes.genresText} primary={checkArray(item.genres[0])} />
                                     </ListItem>
                                 </div>
                             </List>
                         </CardContent>
                         <CardActions>
-                            <Button size="small">View</Button>
+                            <Button
+                                component={Link}
+                                to={{ pathname: `/user/${item.id}`, id: `${item.id}` }}
+                                size="small"
+                                variant='contained'
+                            >
+                                View
+                            </Button>
                         </CardActions>
                     </Card>
                 )

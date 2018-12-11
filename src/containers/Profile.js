@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import GenreList from '../components/GenreList';
 import ProfileTabs from './ProfileTabs'
-import Loading from '../components/Loading'
 const styles = theme => ({
     wrapper: {
         display: 'flex',

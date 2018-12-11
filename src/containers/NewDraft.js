@@ -50,7 +50,7 @@ export default class NewDraft extends Component {
                 notes: this.state.notes,
                 title: this.state.title,
                 draft: this.state.draft,
-                prompt: this.state.prompt
+                prompt: this.state.prompt,
             });
             this.props.history.push("/");
         } catch (e) {
