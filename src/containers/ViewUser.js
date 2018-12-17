@@ -16,6 +16,9 @@ const styles = theme => ({
     userName : {
         fontSize: 24,
         textAlign: 'center'
+    },
+    cardsContainer : {
+        margin : '20px 30px'
     }
 });
 
@@ -52,9 +55,9 @@ class ViewUser extends React.Component {
                     !isLoading
                         ? <div>
                             <Paper className={classes.titleContainer}>
-                            <Typography className={classes.userName} > {this.props.match.params.userName} </Typography>
+                            <Typography className={classes.userName} > {this.props.match.params.name}'s Drafts </Typography>
                             </Paper>
-                            <Paper>
+                            <Paper className={classes.cardsContainer}>
                             <VisitingDraftCards drafts={this.state.drafts} />
                             </Paper>
                         </div> 
