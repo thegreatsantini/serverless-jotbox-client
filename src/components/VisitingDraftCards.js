@@ -17,10 +17,9 @@ const styles = theme => ({
 const VisitingDraftCards = (props) => {
     
         const shortenPrompt = (prompt) => prompt.substring(0, 100) + "..."
-        const { classes, userName } = props
+        const { classes } = props
         // console
         return props.drafts.map((item, i) => {
-            console.log(item)
             return (
                 <React.Fragment key={i}>
                     <ListItem >
