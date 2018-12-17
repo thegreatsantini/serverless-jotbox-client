@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Auth } from "aws-amplify";
 import NavBar from "./components/NavBar";
 import Routes from './Routes';
-import { API } from 'aws-amplify';
 
 class App extends Component {
   constructor(props) {
@@ -13,11 +12,6 @@ class App extends Component {
       isAuthenticating: true
     };
   }
-
-  // getUserName = () =>{
-  //   return API.get('users', '/user')
-
-  // }
 
   async componentDidMount() {
     try {
@@ -31,7 +25,7 @@ class App extends Component {
     }
     catch (e) {
       if (e !== 'No current user') {
-        alert(e);
+        alert('App.js', e);
       }
     }
 
