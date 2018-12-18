@@ -133,7 +133,7 @@ class GenreList extends Component {
                                 }
                             </List>
                     </React.Fragment>
-                    : <Loading />
+                    : <Loading fontSize={24}/>
                 }
             </React.Fragment>
 
