@@ -14,10 +14,11 @@ const styles = theme => ({
 
 
 const GenreInput = (props) => {
-    const { classes, handleAdd, handleChange, value } = props
+    const { classes, handleAdd, handleChange, value, toggleAdd } = props
     return (
         <React.Fragment>
-            <ListItem>
+            <ListItem
+                onMouseLeave={toggleAdd.bind(this)}>
                 <TextField
                     id="new-tag"
                     label="new tag"
@@ -29,7 +30,7 @@ const GenreInput = (props) => {
                 <Button
                     onClick={handleAdd}
                 >
-                    add tag
+                    add genre
                 </Button>
             </ListItem>
         </React.Fragment>
