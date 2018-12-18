@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import { API } from "aws-amplify";
-import VisitingDraftCards from '../components/VisitingDraftCards';
+// import VisitingDraftCards from '../components/VisitingDraftCards';
 import Loading from '../components/Loading';
-import Paper from "@material-ui/core/Paper"
-import { Typography } from '@material-ui/core';
+// import Paper from "@material-ui/core/Paper"
+// import { Typography } from '@material-ui/core';
 const styles = theme => ({
     titleContainer: {
             ...theme.mixins.gutters(),
@@ -16,37 +16,37 @@ const styles = theme => ({
     userName : {
         fontSize: 24,
         textAlign: 'center'
-    },
-    cardsContainer : {
-        margin : '20px 30px'
     }
 });
 
-class ViewUser extends React.Component {
+class VisitingDraft extends React.Component {
     state = {
-        drafts: [],
+        content: [],
         isLoading: true
     };
 
-    getUserData() {
-        return API.get('users', `/users/${this.props.match.params.userId}`)
+    getDraft() {
+        return API.get('users', `/users/${this.props.match.params.userId}/draft/${this.props.match.params.draftId}`)
     }
 
     async componentDidMount() {
             try {
-                const drafts = await this.getUserData()
+                const drafts = await this.getDraft()
                 this.setState({
-                    drafts,
+                    content: drafts,
                     isLoading: false
                 })
             } catch (e) {
-                alert(e)
+                alert('This feature isn\'t ready yet')
+                this.setState({
+                    isLoading: false
+                })
                 console.log(e)
             }
     }
 
     render() {
-        const { classes } = this.props;
+        // const { classes } = this.props;
         const { isLoading } = this.state;
         return (
 
@@ -54,12 +54,7 @@ class ViewUser extends React.Component {
                 {
                     !isLoading
                         ? <div>
-                            <Paper className={classes.titleContainer}>
-                            <Typography className={classes.userName} > {this.props.match.params.name}'s Drafts </Typography>
-                            </Paper>
-                            <Paper className={classes.cardsContainer}>
-                            <VisitingDraftCards drafts={this.state.drafts} />
-                            </Paper>
+                            <p>View their specific draft here...work in progress</p>
                         </div> 
                         : <Loading />
                 }
@@ -69,9 +64,9 @@ class ViewUser extends React.Component {
     }
 }
 
-ViewUser.propTypes = {
+VisitingDraft.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(ViewUser);
+export default withStyles(styles, { withTheme: true })(VisitingDraft);
 
