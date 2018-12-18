@@ -13,24 +13,12 @@ const styles = theme => ({
         ...theme.mixins.gutters(),
         paddingTop: theme.spacing.unit * 4,
         paddingBottom: theme.spacing.unit * 4,
-        width: '25%',
+        width: '15%',
         marginTop: '10px',
         marginBottom: '10px',
         marginLeft: '10px',
         backgroundColor: theme.palette.background.paper,
     },
-    listContainer: {
-        width: '100%',
-        // maxWidth: 360,
-        backgroundColor: theme.palette.background.paper,
-    },
-    draftsContainer: {
-        ...theme.mixins.gutters(),
-        paddingTop: theme.spacing.unit * 4,
-        paddingBottom: theme.spacing.unit * 4,
-        margin: "90px 20px",
-    },
-
 });
 
 class Profile extends React.Component {
