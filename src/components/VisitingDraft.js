@@ -56,7 +56,7 @@ class VisitingDraft extends React.Component {
                         ? <div>
                             <p>View their specific draft here...work in progress</p>
                         </div> 
-                        : <Loading />
+                        : <Loading fontSize={48}/>
                 }
 
             </React.Fragment>

@@ -213,7 +213,7 @@ class SearchUsers extends React.Component {
             <UserCard users={usersToDisplay} />
           </React.Fragment>
         ) : (
-          <Loading />
+          <Loading fontSize={48}/>
         )}
       </React.Fragment>
     );
