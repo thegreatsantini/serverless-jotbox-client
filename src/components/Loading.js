@@ -21,10 +21,10 @@ const styles = theme => ({
 });
 
 function Loading(props) {
-    const { classes } = props;
+    const { classes, fontSize } = props;
     return (
         <div className={classes.container}>
-            <Typography className={classes.title} variant='h3'>
+            <Typography style={{fontSize}} className={classes.title} variant='h3'>
                 Fetching Data
       </Typography>
             <CircularProgress

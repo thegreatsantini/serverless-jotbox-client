@@ -61,7 +61,7 @@ class ViewUser extends React.Component {
                             <VisitingDraftCards drafts={this.state.drafts} />
                             </Paper>
                         </div> 
-                        : <Loading />
+                        : <Loading fontSize={48}/>
                 }
 
             </React.Fragment>
