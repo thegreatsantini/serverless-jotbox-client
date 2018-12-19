@@ -7,7 +7,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import { API } from "aws-amplify";
 import GenreInput from "./GenreInput";

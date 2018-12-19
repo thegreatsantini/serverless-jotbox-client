@@ -27,7 +27,7 @@ TabContainer.propTypes = {
 const styles = theme => ({
   root: {
     // flexGrow: 1,
-    border: "red solid 2px",
+    // border: "red solid 2px",
     backgroundColor: theme.palette.background.paper,
     width: "95%",
     // minWidth: "850px",
@@ -37,7 +37,7 @@ const styles = theme => ({
     // width: "100%",
      // maxWidth: 360,
 //     backgroundColor: theme.palette.background.paper,
-    border: "solid blue 2px"
+    // border: "solid blue 2px"
   },
   draftsContainer: {
     // ...theme.mixins.gutters(),
