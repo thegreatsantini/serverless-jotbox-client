@@ -18,7 +18,6 @@ const VisitingDraftCards = (props) => {
     
         const shortenPrompt = (prompt) => prompt.substring(0, 100) + "..."
         const { classes } = props
-        // console
         return props.drafts.map((item, i) => {
             return (
                 <React.Fragment key={i}>
@@ -32,7 +31,7 @@ const VisitingDraftCards = (props) => {
                     </Icon>
                         <ListItemText primary={item.title} secondary={shortenPrompt(item.prompt)} />
                     </ListItem>
-                    <Divider component="li" />
+                    <Divider />
                 </React.Fragment>
             )
         })

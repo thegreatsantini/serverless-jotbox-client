@@ -54,8 +54,8 @@ class ViewUser extends React.Component {
           <div>
             <Paper className={classes.titleContainer}>
               <Typography className={classes.userName}>
-                {" "}
-                {this.props.match.params.name}'s Drafts{" "}
+                
+                {this.props.match.params.name}'s Drafts
               </Typography>
             </Paper>
             <Paper className={classes.cardsContainer}>
